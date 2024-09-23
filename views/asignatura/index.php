@@ -1,6 +1,6 @@
 <?php
 require '../template/header.php';
-if ($_SESSION['categoria'] != 1) {
+if ($_SESSION['asignatura'] != 1) {
 	header("Location: " . getBaseUrl() . "/views/noacceso.php");
 }
 ?>
@@ -122,7 +122,7 @@ require '../template/footer.php';
 
 <script type="text/javascript">
 	function delayedFunction() {
-		$(location).attr("href", "<?= getBaseUrl() ?>/views/asignatura");
+		$(location).attr("href", "<?= getBaseUrl() ?>/views/user");
 	}
 
 	function desactivar(id) {

@@ -2,8 +2,9 @@
 //Incluímos inicialmente la conexión a la base de datos
 require "../config/Conexion.php";
 
-class Categoria
+class Asignatura
 {
+	private $table = 'asignatura';
 	//Implementamos nuestro constructor
 	public function __construct() {}
 
@@ -34,7 +35,7 @@ class Categoria
 	{
 		try {
 
-			$sql = "INSERT INTO categoria(nombre)VALUES(?);";
+			$sql = "INSERT INTO $this->table(nombre)VALUES(?);";
 			$params = array($nombre);
 			$result = $this->ejecutarConsulta($sql, $params);
 			$idusuarionew = $result['last_id'];
@@ -47,28 +48,28 @@ class Categoria
 	//Implementamos un método para editar registros
 	public function editar($id, $nombre)
 	{
-		$sql = "UPDATE categoria SET nombre='$nombre' WHERE idtask='$id'";
+		$sql = "UPDATE $this->table SET nombre='$nombre' WHERE idasignatura='$id'";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementamos un método para desactivar categorías
 	public function desactivar($id)
 	{
-		$sql = "UPDATE categoria SET eliminado = 0 WHERE id='$id'";
+		$sql = "DELETE FROM $this->table WHERE idasignatura = $id";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementar un método para mostrar los datos de un registro a modificar
 	public function mostrar($id)
 	{
-		$sql = "SELECT * FROM categoria WHERE eliminado = 1 AND id='$id'";
+		$sql = "SELECT * FROM $this->table WHERE idasignatura='$id'";
 		return ejecutarConsultaSimpleFila($sql);
 	}
 
 	//Implementar un método para listar los registros
 	public function listar()
 	{
-		$sql = "SELECT * FROM categoria WHERE eliminado = 1";
+		$sql = "SELECT * FROM $this->table";
 		return ejecutarConsulta($sql);
 	}
 }

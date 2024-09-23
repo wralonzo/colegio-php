@@ -4,75 +4,72 @@ if ($_SESSION['user'] != 1) {
 	header("Location: " . getBaseUrl() . "/views/noacceso.php");
 }
 ?>
-<style>
-	.container-header {
-		font-size: 1.5em;
-		color: #fff;
-		background-image: none;
-		background-color: rgba(255, 255, 255, 0.5);
-	}
 
-	.imagelogo {
-		background-image: url('../../assets/img/task.jpg');
-		background-repeat: no-repeat;
-		background-size: cover;
-		background-color: rgba(255, 255, 255, 0);
+<div class="page-wrapper">
+	<div class="content">
+		<div class="page-header">
+			<div class="page-title">
+				<h4>Listado de usuarios</h4>
+				<h6>Gestionar usuarios</h6>
+			</div>
+			<div class="page-btn">
+				<a href="insert.php" class="btn btn-added"><img src="../../assets/img/icons/plus.svg" class="me-2" alt="img" />
+					Agregar usuario</a>
+			</div>
+		</div>
 
-	}
-
-	.dataTables_filter label {
-		color: black;
-		opacity: 0.8;
-	}
-
-	.table thead tr th {
-		color: black !important;
-		opacity: 0.8 !important;
-	}
-
-	.panel-header-text {
-		color: black !important;
-		font-weight: bold;
-	}
-</style>
-<div class="panel-header panel-header-lg text-white">
-</div>
-<div class="content" style="margin-top: -300px !important;">
-	<div class="imagelogo col-lg-12">
-		<div class="card-chart container-header">
-			<div class="card-header">
-				<div class=" container-header">
-					<center>
-						<div class="row" style="display: flex; justify-content: space-between;">
-							<div class="col-lg-4">
-								<img width="30%" src="../../assets/img/dic.jpg" alt="PNC" style="margin-top: 10px;">
-							</div>
-							<div class="col-lg-4">
-								<h3>Listado de casos</h3>
-							</div>
-							<div class="col-lg-4">
-								<img width="45%" src="../../assets/img/pnc.png" alt="PNC">
-							</div>
+		<div class="card">
+			<div class="card-body">
+				<div class="table-top">
+					<div class="search-set">
+						<div class="search-path">
+							<a class="btn btn-filter" id="filter_search">
+								<img src="../../assets/img/icons/filter.svg" alt="img" />
+								<span><img src="../../assets/img/icons/closes.svg" alt="img" /></span>
+							</a>
 						</div>
-					</center>
-					<div>
-						<a class="btn btn-success" href="<?= getBaseUrl() ?>/views/user/insert.php"> <i class="now-ui-icons ui-1_simple-add"></i></a>
+						<div class="search-input">
+							<a class="btn btn-searchset"><img src="../../assets/img/icons/search-white.svg" alt="img" /></a>
+						</div>
 					</div>
-					<div class="panel-header-text panel-body table-responsive center-text text-center" id="listadoregistros" style="font-size: 12px; margin-top: 20px;">
-						<table id="tbllistado" class="table table-bordered table-hover panel-header-text">
-							<thead style="font-size: 10px;">
-								<th>ACCIONES</th>
+					<div class="wordset">
+						<ul>
+							<li>
+								<a
+									data-bs-toggle="tooltip"
+									data-bs-placement="top"
+									title="pdf"><img src="../../assets/img/icons/pdf.svg" alt="img" /></a>
+							</li>
+							<li>
+								<a
+									data-bs-toggle="tooltip"
+									data-bs-placement="top"
+									title="excel"><img src="../../assets/img/icons/excel.svg" alt="img" /></a>
+							</li>
+							<li>
+								<a
+									data-bs-toggle="tooltip"
+									data-bs-placement="top"
+									title="print"><img src="../../assets/img/icons/printer.svg" alt="img" /></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="">
+					<table class="table tabledata" id="wordset">
+						<thead>
+							<tr>
 								<th>NOMBRE</th>
 								<th>TELEFONO</th>
 								<th>E-MAIL</th>
 								<th>USER</th>
-								<th>GUARDIA</th>
-								<th>FOTO</th>
-							</thead>
-							<tbody>
-							</tbody>
-						</table>
-					</div>
+								<th>Imagen</th>
+								<th>ACCIONES</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -121,42 +118,21 @@ require '../template/footer.php';
 		});
 	}
 	$(document).ready(function() {
-		$('#tbllistado').dataTable({
-			"paging": true,
-			"lengthChange": true,
-			"searching": true,
-			"ordering": true,
-			"info": true,
-			"autoWidth": false,
-			responsive: true,
-			"scrollX": true,
-			"aProcessing": true,
-			"aServerSide": true,
-			dom: 'Bfrtip',
-			lengthMenu: [
-				[5, 10, 25, 50, -1],
-				['5 filas', '10 filas', '25 filas', '50 filas', 'Mostrar todo']
-			],
-			buttons: [{
-					extend: 'pageLength',
-					text: 'Items',
-				},
-				{
-					extend: 'print',
-					text: 'Imprimir',
-					title: 'Usuarios',
-					exportOptions: {
-						columns: function(idx, data, node) {
-							return idx !== 0;
-						}
-					},
-				},
-				{
-					extend: 'pdf',
-					text: 'DESCARGAR PDF',
-					title: 'Usuarios BYTE SEVEN'
-				},
-			],
+		$(".tabledata").DataTable({
+			bFilter: true,
+			sDom: "fBtlpi",
+			pagingType: "numbers",
+			ordering: true,
+			language: {
+				search: " ",
+				sLengthMenu: "_MENU_",
+				searchPlaceholder: "Search...",
+				info: "_START_ - _END_ of _TOTAL_ items",
+			},
+			initComplete: (settings, json) => {
+				$(".dataTables_filter").appendTo("#tableSearch");
+				$(".dataTables_filter").appendTo(".search-input");
+			},
 			"ajax": {
 				url: '<?= getBaseUrl() ?>/controllers/login.php?op=listar',
 				type: "get",
@@ -165,26 +141,7 @@ require '../template/footer.php';
 					console.log(e.responseText);
 				}
 			},
-			"bDestroy": true,
-			"iDisplayLength": 20,
-			"order": [
-				[0, "desc"]
-			],
-			language: {
-				zeroRecords: 'No hay registros para mostrar.',
-				info: "Mostrando página _PAGE_ de _PAGES_ páginas",
-				search: 'Buscar',
-				emptyTable: 'La tabla está vacia.',
-				"oPaginate": {
-					"sFirst": "Primero",
-					"sLast": "Ultimo",
-					"sNext": "Siguiente",
-					"sPrevious": "Anterior",
-				}
-			}
-		}).DataTable();
-
-
+		});
 
 		function activar(id) {
 			$.ajax({

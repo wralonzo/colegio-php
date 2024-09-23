@@ -3,9 +3,9 @@
 
 try {
     session_start();
-    require_once "../models/Categoria.php";
+    require_once "../models/Asignatura.php";
     require '../config/baseurl.php';
-    $task = new Categoria();
+    $task = new Asignatura();
 
     $id = isset($_POST["id"]) ? limpiarCadena($_POST["id"]) : "";
     $nombre = isset($_POST["nombre"]) ? limpiarCadena($_POST["nombre"]) : "";
@@ -47,11 +47,14 @@ try {
             $data = array();
             while ($reg = $rspta->fetch_object()) {
                 $data[] = array(
-                    "0" =>
-                    ' <a class="btn btn-primary" href="' . getBaseUrl() . '/views/categoria/edit.php?id=' . $reg->id . '"><i class="now-ui-icons arrows-1_share-66"></i></a>' .
-                        ' <button class="btn btn-danger" onclick="desactivar(' . $reg->id . ')"><i class="now-ui-icons ui-1_simple-remove"></i></button>',
-                    "1" => $reg->id,
-                    "2" => $reg->nombre
+
+                    "0" => $reg->id,
+                    "1" => $reg->nombre,
+                    "2" =>
+                    ' <a class="me-3" href="' . getBaseUrl() . '/views/asignatura/edit.php?id=' . $reg->idasignatura . '"><img src="../../assets/img/icons/edit.svg" alt="img" /></a>
+					    <a onclick="desactivar(' . $reg->idasignatura . ')" class="me-3 confirm-text" href="#">
+						    <img src="../../assets/img/icons/delete.svg" alt="img" />
+						</a>',
                 );
             }
             $results = array(

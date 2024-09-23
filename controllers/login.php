@@ -9,12 +9,10 @@ $idusuario = isset($_POST["idusuario"]) ? limpiarCadena($_POST["idusuario"]) : "
 $nombre = isset($_POST["nombre"]) ? limpiarCadena($_POST["nombre"]) : "";
 $telefono = isset($_POST["telefono"]) ? limpiarCadena($_POST["telefono"]) : "";
 $email = isset($_POST["email"]) ? limpiarCadena($_POST["email"]) : "";
-$cargo = isset($_POST["cargo"]) ? limpiarCadena($_POST["cargo"]) : "";
 $login = isset($_POST["login"]) ? limpiarCadena($_POST["login"]) : "";
 $rol = isset($_POST["rol"]) ? limpiarCadena($_POST["rol"]) : "";
 $clave = isset($_POST["clave"]) ? limpiarCadena($_POST["clave"]) : "";
 $imagen = isset($_POST["imagen"]) ? limpiarCadena($_POST["imagen"]) : "";
-$guardia = isset($_POST["guardia"]) ? limpiarCadena($_POST["guardia"]) : "";
 
 switch ($_GET["op"]) {
     case 'guardaryeditar':
@@ -31,13 +29,13 @@ switch ($_GET["op"]) {
         $clavehash = hash("SHA256", $clave);
 
         if (empty($idusuario)) {
-            $rspta = $usuario->insertar($nombre, $telefono, $email, $cargo, $login, $clavehash, $imagen, $_POST['permiso'], $rol, $guardia);
+            $rspta = $usuario->insertar($nombre, $telefono, $email, $login, $clavehash, $imagen, $_POST['permiso'], $rol);
             echo $rspta ? 1 : 2;
         } else {
             if ($imagen == "") {
                 $imagen = $_POST["imagenactual"];
             }
-            $rspta = $usuario->editar($idusuario, $nombre, $telefono, $email, $cargo, $login, $clavehash, $imagen, $_POST['permiso'], $rol, $guardia);
+            $rspta = $usuario->editar($idusuario, $nombre, $telefono, $email, $login, $clavehash, $imagen, $_POST['permiso'], $rol);
             echo $rspta ? 3 : 4;
         }
         break;
@@ -63,17 +61,17 @@ switch ($_GET["op"]) {
         $data = array();
         while ($reg = $rspta->fetch_object()) {
             $data[] = array(
-                "0" =>
-                ' <a class="btn btn-primary" href="' . getBaseUrl() . '/views/user/edit.php?id=' . $reg->idusuario . '"><i class="now-ui-icons arrows-1_share-66"></i></a>' .
-                    ' <button class="btn btn-danger" onclick="desactivarUsuario(' . $reg->idusuario . ')"><i class="now-ui-icons ui-1_simple-remove"></i></button>',
-                "1" => $reg->nombre,
-                "2" => $reg->telefono,
-                "3" => $reg->email,
-                "4" => $reg->login,
-                "5" => $reg->guardia,
-                "6" => isset($reg->imagen) ?
+                "0" => $reg->nombre,
+                "1" => $reg->telefono,
+                "2" => $reg->email,
+                "3" => $reg->login,
+                "4" => isset($reg->imagen) ?
                     "<img alt='No imagen' src='" . getBaseUrl() . "/files/usuarios/" . $reg->imagen . "' height='50px' width='50px' >" :
                     "<img alt='No imagen' src='" . getBaseUrl() . "/files/local/avatar.png' height='50px' width='50px' >",
+                "5" =>  ' <a class="me-3" href="' . getBaseUrl() . '/views/user/edit.php?id=' . $reg->idusuario . '"><img src="../../assets/img/icons/edit.svg" alt="img" /></a>
+					    <a onclick="desactivarUsuario(' . $reg->idusuario . ')" class="me-3 confirm-text" href="#">
+						    <img src="../../assets/img/icons/delete.svg" alt="img" />
+						</a>',
             );
         }
         $results = array(
@@ -102,11 +100,17 @@ switch ($_GET["op"]) {
         while ($per = $marcados->fetch_object()) {
             array_push($valores, $per->idpermiso);
         }
-
+    
         //Mostramos la lista de permisos en la vista y si están o no marcados
         while ($reg = $rspta->fetch_object()) {
             $sw = in_array($reg->idpermiso, $valores) ? 'checked' : '';
-            echo '<label class=" mx-4"> <input class="form-control" type="checkbox" ' . $sw . '  name="permiso[]" value="' . $reg->idpermiso . '" id="' . $reg->idpermiso . '">' . $reg->nombre . '</label>';
+            echo '
+               <div class="row"> <div class="checkbox">
+                    <label> 
+                        <input type="checkbox" name="permiso[]" ' . $sw . ' value="' . $reg->idpermiso . '" id="' . $reg->idpermiso . '" /> ' . $reg->nombre . '
+                    </label>
+                </div>
+            ';
         }
         break;
 

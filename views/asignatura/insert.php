@@ -4,34 +4,33 @@ if ($_SESSION['categoria'] != 1) {
   header("Location: " . getBaseUrl() . "/views/noacceso.php");
 }
 ?>
-<div class="panel-header panel-header-lg text-white">
-</div>
-<div class="content" style="margin-top: -300px !important;">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card card-chart">
-        <div class="card-header">
-          <h2>Ingresar Categoria</h2>
-          <div class="panel-body" id="formularioregistros">
-            <form name="formulario" id="formulario" method="POST">
-              <div class="container">
-                <div class="row">
-                  <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <label>Nombre</label>
-                    <input type="text" class="form-control" name="nombre" id="nombre" maxlength="100" placeholder="Nombre" required>
-                  </div>
 
-                  <div class="center-text text-center container">
-                    <button class="btn btn-primary mx-4" type="submit" id="btnGuardar"><i class="now-ui-icons arrows-1_minimal-right"></i> Guardar</button>
-                    <!-- <button class="btn btn-danger mx-4" onclick="cancelarform()" type="button"><i class="now-ui-icons ui-1_simple-remove"></i> Cancelar</button> -->
-                  </div>
-                </div>
+<div class="page-wrapper">
+  <div class="content">
+    <div class="page-header">
+      <div class="page-title">
+        <h4>Agregar asignatura</h4>
+        <h6>Crear una nueva Area de asignacion</h6>
+      </div>
+    </div>
+    <form name="formulario" id="formulario" method="POST">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label>Nombre de la asignatura</label>
+                <textarea name="nombre" class="form-control" placeholder="Nombre de la asignatura" required></textarea>
               </div>
-            </form>
+            </div>
+            <div class="col-lg-12">
+              <button type="submit" class="btn btn-submit me-2">Guardar</button>
+              <a href="<?= getBaseUrl() ?>/views/asignatura" class="btn btn-cancel">Cancelar</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </div>
 <?php
@@ -50,7 +49,7 @@ require '../template/footer.php';
       var formData = new FormData($("#formulario")[0]);
 
       $.ajax({
-        url: "<?= getBaseUrl() ?>/controllers/categoria.php?op=guardaryeditar",
+        url: "<?= getBaseUrl() ?>/controllers/asignatura.php?op=guardaryeditar",
         type: "POST",
         data: formData,
         contentType: false,
@@ -62,13 +61,13 @@ require '../template/footer.php';
             Swal.fire({
               position: 'top-end',
               icon: 'success',
-              title: 'Categoria registrada',
+              title: 'Asignatura registrada',
               showConfirmButton: false,
               timer: 1500
             });
             $("#btnGuardar").prop("disabled", false);
             setTimeout(() => {
-              $(location).attr("href", "<?= getBaseUrl() ?>/views/categoria");
+              $(location).attr("href", "<?= getBaseUrl() ?>/views/asignatura");
             }, 2000);
           } else {
             console.log(datos);

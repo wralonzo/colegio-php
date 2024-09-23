@@ -39,7 +39,9 @@ if (!isset($_SESSION["nombre"])) {
     <link rel="stylesheet" href="<?= getBaseUrl() ?>/assets/css/animate.css" />
 
     <link rel="stylesheet" href="<?= getBaseUrl() ?>/assets/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" href="<?= getBaseUrl() ?>/assets/plugins/select2/css/select2.min.css" />
 
+    <link rel="stylesheet" href="<?= getBaseUrl() ?>/assets/css/dataTables.bootstrap4.min.css" />
     <link
         rel="stylesheet"
         href="<?= getBaseUrl() ?>/assets/plugins/fontawesome/css/fontawesome.min.css" />
@@ -115,9 +117,8 @@ if (!isset($_SESSION["nombre"])) {
                         data-bs-toggle="dropdown"
                         aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="profile.html">My Profile</a>
-                        <a class="dropdown-item" href="generalsettings.html">Settings</a>
-                        <a class="dropdown-item" href="signin.html">Logout</a>
+                        <a class="dropdown-item" href="profile.html">Mi perfil</a>
+                        <a class="dropdown-item" href="<?= getBaseUrl() ?>/controllers/login.php?op=salir">Logout</a>
                     </div>
                 </div>
             </div>
@@ -162,7 +163,12 @@ if (!isset($_SESSION["nombre"])) {
                             </li>
 
                             <li>
-                                <!-- <a href="blankpage.html"><i data-feather="people"></i><span>Usuarios</span> -->
+                                <a href="<?= getBaseUrl() ?>/views/asignatura"><i data-feather="users"></i><span>Asignaturas</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="<?= getBaseUrl() ?>/views/user"><i data-feather="users"></i><span>Usuarios</span>
                                 </a>
                             </li>
                         </ul>
