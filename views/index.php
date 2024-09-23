@@ -4,251 +4,185 @@ if ($_SESSION['admin'] != 1) {
   header("Location: " . getBaseUrl() . "/views/noacceso.php");
 }
 ?>
-<div class="panel-header panel-header-lg">
-  <canvas id="bigDashboardChart"></canvas>
-</div>
-<div class="content">
-  <div class="row">
-    <div class="col-lg-4">
-      <div class="card card-chart">
-        <div class="card-header">
-          <h5 class="card-category">Casos</h5>
-          <h4 class="card-title">Todos los casos</h4>
-          <div class="dropdown">
+<div class="page-wrapper">
+  <div class="content">
+    <div class="row">
+      <div class="col-lg-3 col-sm-6 col-12 d-flex">
+        <div class="dash-count">
+          <div class="dash-counts">
+            <h4>100</h4>
+            <h5>Usuarios</h5>
+          </div>
+          <div class="dash-imgs">
+            <i data-feather="user"></i>
           </div>
         </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <canvas id="lineChartExampleCasos"></canvas>
+      </div>
+      <div class="col-lg-3 col-sm-6 col-12 d-flex">
+        <div class="dash-count das1">
+          <div class="dash-counts">
+            <h4>100</h4>
+            <h5>Estudiantes</h5>
+          </div>
+          <div class="dash-imgs">
+            <i data-feather="user-check"></i>
           </div>
         </div>
-        <div class="card-footer">
-          <div class="stats">
-            <i class="now-ui-icons arrows-1_refresh-69"></i>
+      </div>
+      <div class="col-lg-3 col-sm-6 col-12 d-flex">
+        <div class="dash-count das2">
+          <div class="dash-counts">
+            <h4>100</h4>
+            <h5>Cursos</h5>
+          </div>
+          <div class="dash-imgs">
+            <i data-feather="file-text"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 col-12 d-flex">
+        <div class="dash-count das3">
+          <div class="dash-counts">
+            <h4>105</h4>
+            <h5>Notas</h5>
+          </div>
+          <div class="dash-imgs">
+            <i data-feather="file"></i>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-lg-4 col-md-6">
-      <div class="card card-chart">
-        <div class="card-header">
-          <h5 class="card-category">Usuario</h5>
-          <h4 class="card-title">Todos los usuario</h4>
-
-        </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <canvas id="lineChartExampleWithNumbersAndGrid"></canvas>
+    <div class="row">
+      <div class="col-lg-12 col-sm-12 col-12 d-flex">
+        <div class="card flex-fill">
+          <div
+            class="card-header pb-0 d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">Notas por cursos</h5>
+            <div class="graph-sets">
+              <ul>
+                <li>
+                  <span>Sales</span>
+                </li>
+                <li>
+                  <span>Purchase</span>
+                </li>
+              </ul>
+              <div class="dropdown">
+                <button
+                  class="btn btn-white btn-sm dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  2022
+                  <img
+                    src="<?= getBaseUrl() ?>/assets/img/icons/dropdown.svg"
+                    alt="img"
+                    class="ms-2" />
+                </button>
+                <ul
+                  class="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton">
+                  <li>
+                    <a href="javascript:void(0);" class="dropdown-item">2022</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" class="dropdown-item">2021</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" class="dropdown-item">2020</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="card-footer">
-          <div class="stats">
-            <i class="now-ui-icons arrows-1_refresh-69"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-md-6">
-      <div class="card card-chart">
-        <div class="card-header">
-          <h5 class="card-category">Documentos</h5>
-          <h4 class="card-title">Todos los documentos</h4>
-        </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <canvas id="barChartSimpleGradientsNumbers"></canvas>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="stats">
-            <i class="now-ui-icons ui-2_time-alarm"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <!-- <div class="col-md-6">
-      <div class="card  card-tasks">
-        <div class="card-header ">
-          <h5 class="card-category">Backend development</h5>
-          <h4 class="card-title">Tasks</h4>
-        </div>
-        <div class="card-body ">
-          <div class="table-full-width table-responsive">
-            <table class="table">
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" checked>
-                        <span class="form-check-sign"></span>
-                      </label>
-                    </div>
-                  </td>
-                  <td class="text-left">Sign contract for "What are conference organizers afraid of?"</td>
-                  <td class="td-actions text-right">
-                    <button type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
-                      <i class="now-ui-icons ui-2_settings-90"></i>
-                    </button>
-                    <button type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-                      <i class="now-ui-icons ui-1_simple-remove"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox">
-                        <span class="form-check-sign"></span>
-                      </label>
-                    </div>
-                  </td>
-                  <td class="text-left">Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                  <td class="td-actions text-right">
-                    <button type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
-                      <i class="now-ui-icons ui-2_settings-90"></i>
-                    </button>
-                    <button type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-                      <i class="now-ui-icons ui-1_simple-remove"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" checked>
-                        <span class="form-check-sign"></span>
-                      </label>
-                    </div>
-                  </td>
-                  <td class="text-left">Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                  </td>
-                  <td class="td-actions text-right">
-                    <button type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
-                      <i class="now-ui-icons ui-2_settings-90"></i>
-                    </button>
-                    <button type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-                      <i class="now-ui-icons ui-1_simple-remove"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="card-footer ">
-          <hr>
-          <div class="stats">
-            <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
+          <div class="card-body">
+            <div id="sales_charts"></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="card-category">All Persons List</h5>
-          <h4 class="card-title"> Employees Stats</h4>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table">
-              <thead class=" text-primary">
-                <th>
-                  Name
-                </th>
-                <th>
-                  Country
-                </th>
-                <th>
-                  City
-                </th>
-                <th class="text-right">
-                  Salary
-                </th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    Dakota Rice
-                  </td>
-                  <td>
-                    Niger
-                  </td>
-                  <td>
-                    Oud-Turnhout
-                  </td>
-                  <td class="text-right">
-                    $36,738
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Minerva Hooper
-                  </td>
-                  <td>
-                    Curaçao
-                  </td>
-                  <td>
-                    Sinaai-Waas
-                  </td>
-                  <td class="text-right">
-                    $23,789
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Sage Rodriguez
-                  </td>
-                  <td>
-                    Netherlands
-                  </td>
-                  <td>
-                    Baileux
-                  </td>
-                  <td class="text-right">
-                    $56,142
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Doris Greene
-                  </td>
-                  <td>
-                    Malawi
-                  </td>
-                  <td>
-                    Feldkirchen in Kärnten
-                  </td>
-                  <td class="text-right">
-                    $63,542
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Mason Porter
-                  </td>
-                  <td>
-                    Chile
-                  </td>
-                  <td>
-                    Gloucester
-                  </td>
-                  <td class="text-right">
-                    $78,615
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+    <!-- <div class="card mb-0">
+      <div class="card-body">
+        <h4 class="card-title">Expired Products</h4>
+        <div class="table-responsive dataview">
+          <table class="table datatable">
+            <thead>
+              <tr>
+                <th>SNo</th>
+                <th>Product Code</th>
+                <th>Product Name</th>
+                <th>Brand Name</th>
+                <th>Category Name</th>
+                <th>Expiry Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><a href="javascript:void(0);">IT0001</a></td>
+                <td class="productimgname">
+                  <a class="product-img" href="productlist.html">
+                    <img
+                      src="assets/img/product/product2.jpg"
+                      alt="product" />
+                  </a>
+                  <a href="productlist.html">Orange</a>
+                </td>
+                <td>N/D</td>
+                <td>Fruits</td>
+                <td>12-12-2022</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td><a href="javascript:void(0);">IT0002</a></td>
+                <td class="productimgname">
+                  <a class="product-img" href="productlist.html">
+                    <img
+                      src="assets/img/product/product3.jpg"
+                      alt="product" />
+                  </a>
+                  <a href="productlist.html">Pineapple</a>
+                </td>
+                <td>N/D</td>
+                <td>Fruits</td>
+                <td>25-11-2022</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><a href="javascript:void(0);">IT0003</a></td>
+                <td class="productimgname">
+                  <a class="product-img" href="productlist.html">
+                    <img
+                      src="assets/img/product/product4.jpg"
+                      alt="product" />
+                  </a>
+                  <a href="productlist.html">Stawberry</a>
+                </td>
+                <td>N/D</td>
+                <td>Fruits</td>
+                <td>19-11-2022</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td><a href="javascript:void(0);">IT0004</a></td>
+                <td class="productimgname">
+                  <a class="product-img" href="productlist.html">
+                    <img
+                      src="assets/img/product/product5.jpg"
+                      alt="product" />
+                  </a>
+                  <a href="productlist.html">Avocat</a>
+                </td>
+                <td>N/D</td>
+                <td>Fruits</td>
+                <td>20-11-2022</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-    </div>
-  </div> -->
+    </div> -->
   </div>
 </div>
 <?php
@@ -936,4 +870,4 @@ require './template/footer.php';
 </script>
 </body>
 
-</html>ƒ
+</html>

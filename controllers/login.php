@@ -156,7 +156,7 @@ switch ($_GET["op"]) {
         $respuestajson = json_encode($fetch);
 
         if ($respuestajson == "null") {
-            echo 2;
+            echo 1;
         } else {
             echo 1;
         }

@@ -7,7 +7,7 @@ function getBaseUrl()
     $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
     $domainName = $_SERVER['HTTP_HOST'];
     return
-        $protocol . $domainName . "/task";
+        $protocol . $domainName . "/school";
 }
 if (!isset($_SESSION["nombre"])) {
     header("Location: " . getBaseUrl());
@@ -18,109 +18,154 @@ if (!isset($_SESSION["nombre"])) {
 
 <head>
     <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="<?= getBaseUrl() ?>/assets/img/dic.jpg">
-    <link rel="icon" type="image/png" href="<?= getBaseUrl() ?>/assets/img/dic.jpg">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>
-        SIGERMIP
-    </title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-    <!--     Fonts and icons     -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-    <link rel="stylesheet" href="<?= getBaseUrl() ?>/assets/css/release.min.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <!-- CSS Files -->
-    <link href="<?= getBaseUrl() ?>/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="<?= getBaseUrl() ?>/assets/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link href="<?= getBaseUrl() ?>/assets/demo/demo.css" rel="stylesheet" />
-    <link rel="stylesheet" href="<?= getBaseUrl() ?>/assets/css/cssAdicionales/responsive.dataTables.min.css">
-    <link rel="stylesheet" href="<?= getBaseUrl() ?>/assets/css/cssAdicionales/buttons.dataTables.min.css">
-    <link rel="stylesheet" href="<?= getBaseUrl() ?>/assets/css/datatable.css">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=0" />
+    <meta name="description" content="POS - Bootstrap Admin Template" />
+    <meta
+        name="keywords"
+        content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern,  html5, responsive" />
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Colegio</title>
+
+    <link
+        rel="shortcut icon"
+        type="image/x-icon"
+        href="<?= getBaseUrl() ?>/assets/img/favicon.jpg" />
+
+    <link rel="stylesheet" href="<?= getBaseUrl() ?>/assets/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="<?= getBaseUrl() ?>/assets/css/animate.css" />
+
+    <link rel="stylesheet" href="<?= getBaseUrl() ?>/assets/css/dataTables.bootstrap4.min.css" />
+
+    <link
+        rel="stylesheet"
+        href="<?= getBaseUrl() ?>/assets/plugins/fontawesome/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="<?= getBaseUrl() ?>/assets/plugins/fontawesome/css/all.min.css" />
+
+    <link rel="stylesheet" href="<?= getBaseUrl() ?>/assets/css/style.css" />
 </head>
 
 <body class="">
-    <div class="wrapper ">
-        <div class="sidebar" style="background-color: #5b9bd5;">
-            <!--
-        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
-    -->
-            <div class="logo" style="background-color: #5b9bd5;">
-                <a href="#" class="simple-text logo-normal center-text text-center">
-                    SIGERMIP - DEIC
-                </a>
-            </div>
-            <div class="sidebar-wrapper" id="sidebar-wrapper" style="background-color: #5b9bd5;">
-                <ul class="nav">
-                    <li class="active ">
-                        <a href="<?= getBaseUrl() ?>/views/">
-                            <i class="now-ui-icons design_app"></i>
-                            <strong style="color: black;">Resumen</strong>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= getBaseUrl() ?>/views/user">
-                            <i class="now-ui-icons users_circle-08"></i>
-                            <p>Usuarios</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= getBaseUrl() ?>/views/task">
-                            <i class="now-ui-icons location_map-big"></i>
-                            <p>Casos</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= getBaseUrl() ?>/views/files">
-                            <i class="now-ui-icons files_single-copy-04"></i>
-                            <p>Documentos</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= getBaseUrl() ?>/views/categoria">
-                            <i class="now-ui-icons design_bullet-list-67"></i>
-                            <p>Categorías</p>
-                        </a>
-                    </li>
 
+    <body>
+        <div id="global-loader">
+            <div class="whirly-loader"></div>
+        </div>
+
+        <div class="main-wrapper">
+            <div class="header">
+                <div class="header-left active">
+                    <a href="index.html" class="logo">
+                        <img src="<?= getBaseUrl() ?>/assets/img/logo.png" alt="" />
+                    </a>
+                    <a href="index.html" class="logo-small">
+                        <img src="<?= getBaseUrl() ?>/assets/img/logo-small.png" alt="" />
+                    </a>
+                    <a id="toggle_btn" href="javascript:void(0);"> </a>
+                </div>
+
+                <a id="mobile_btn" class="mobile_btn" href="#sidebar">
+                    <span class="bar-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </a>
+
+                <ul class="nav user-menu">
+
+                    <li class="nav-item dropdown has-arrow main-drop">
+                        <a
+                            href="javascript:void(0);"
+                            class="dropdown-toggle nav-link userset"
+                            data-bs-toggle="dropdown">
+                            <span class="user-img"><img src="<?= getBaseUrl() ?>/assets/img/profiles/avator1.jpg" alt="" />
+                                <span class="status online"></span></span>
+                        </a>
+                        <div class="dropdown-menu menu-drop-user">
+                            <div class="profilename">
+                                <div class="profileset">
+                                    <span class="user-img"><img src="<?= getBaseUrl() ?>/assets/img/profiles/avator1.jpg" alt="" />
+                                        <span class="status online"></span></span>
+                                    <div class="profilesets">
+                                        <h6>John Doe</h6>
+                                        <h5>Admin</h5>
+                                    </div>
+                                </div>
+                                <hr class="m-0" />
+                                <a class="dropdown-item" href="profile.html">
+                                    <i class="me-2" data-feather="user"></i> Mi perfil</a>
+                                <hr class="m-0" />
+                                <a class="dropdown-item logout pb-0" href="<?= getBaseUrl() ?>/controllers/login.php?op=salir"><img
+                                        src="<?= getBaseUrl() ?>/assets/img/icons/log-out.svg"
+                                        class="me-2"
+                                        alt="img" />Cerrar sesión</a>
+                            </div>
+                        </div>
                     </li>
                 </ul>
-            </div>
-        </div>
-        <div class="main-panel" id="main-panel">
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
-                <div class="container-fluid">
-                    <div class="navbar-wrapper">
-                        <div class="navbar-toggle">
-                            <button type="button" class="navbar-toggler">
-                                <span class="navbar-toggler-bar bar1"></span>
-                                <span class="navbar-toggler-bar bar2"></span>
-                                <span class="navbar-toggler-bar bar3"></span>
-                            </button>
-                        </div>
-                        <a class="navbar-brand" href="#pablo">2024</a>
+
+                <div class="dropdown mobile-user-menu">
+                    <a
+                        href="javascript:void(0);"
+                        class="nav-link dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="profile.html">My Profile</a>
+                        <a class="dropdown-item" href="generalsettings.html">Settings</a>
+                        <a class="dropdown-item" href="signin.html">Logout</a>
                     </div>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-bar navbar-kebab"></span>
-                        <span class="navbar-toggler-bar navbar-kebab"></span>
-                        <span class="navbar-toggler-bar navbar-kebab"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                        <ul class="navbar-nav">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    <i class="now-ui-icons users_single-02"></i>
-                                    <p>
-                                        <span class="d-lg-none d-md-block">Account</span>
-                                    </p>
+                </div>
+            </div>
+
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar-inner slimscroll">
+                    <div id="sidebar-menu" class="sidebar-menu">
+                        <ul>
+                            <li class="active">
+                                <a href="index.html"><img src="<?= getBaseUrl() ?>/assets/img/icons/dashboard.svg" alt="img" /><span>
+                                        Dashboard</span>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="<?= getBaseUrl() ?>/controllers/login.php?op=salir">Salir</a>
-                                </div>
+                            </li>
+                            <li>
+                                <a href="blankpage.html"><i data-feather="user"></i><span>Estudiantes</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="blankpage.html"><i data-feather="list"></i><span>Notas</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="blankpage.html"><i data-feather="book"></i><span>Diario pedagogico</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="blankpage.html"><i class="fa fa-address-book"></i><span>Asignacion de recursos</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="blankpage.html"><i data-feather="check"></i><span>Asistencias</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="blankpage.html"><i data-feather="users"></i><span>Cursos</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <!-- <a href="blankpage.html"><i data-feather="people"></i><span>Usuarios</span> -->
+                                </a>
                             </li>
                         </ul>
                     </div>
                 </div>
-            </nav>
-
-            <!-- End Navbar -->
+            </div>
