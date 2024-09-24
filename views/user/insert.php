@@ -1,6 +1,6 @@
 <?php
 require '../template/header.php';
-if ($_SESSION['user'] != 1) {
+if ($_SESSION['admin'] != 1) {
   header("Location: " . getBaseUrl() . "/views/noacceso.php");
 }
 ?>

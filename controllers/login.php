@@ -117,18 +117,14 @@ switch ($_GET["op"]) {
     case 'verificar':
         $logina = $_POST['username'];
         $clavea = $_POST['password'];
-
-        //Hash SHA256 en la contraseña
         $clavehash = hash("SHA256", $clavea);
-
         $rspta = $usuario->verificar($logina, $clavehash);
-
         $fetch = $rspta->fetch_object();
-
         if (isset($fetch)) {
             //Declaramos las variables de sesión
             $_SESSION['idusuario'] = $fetch->idusuario;
             $_SESSION['nombre'] = $fetch->nombre;
+            $_SESSION['correo'] = $fetch->correo;
             $_SESSION['imagen'] = $fetch->imagen;
             $_SESSION['login'] = $fetch->login;
             $_SESSION['clave'] = $fetch->clave;
@@ -147,11 +143,12 @@ switch ($_GET["op"]) {
 
             //Determinamos los accesos del usuario
             in_array(1, $valores) ? $_SESSION['admin'] = 1 : $_SESSION['admin'] = 0;
-            in_array(2, $valores) ? $_SESSION['case'] = 1 : $_SESSION['case'] = 0;
-            in_array(3, $valores) ? $_SESSION['file'] = 1 : $_SESSION['file'] = 0;
-            in_array(4, $valores) ? $_SESSION['categoria'] = 1 : $_SESSION['categoria'] = 0;
-            in_array(5, $valores) ? $_SESSION['user'] = 1 : $_SESSION['user'] = 0;
-            in_array(6, $valores) ? $_SESSION['tracking'] = 1 : $_SESSION['tracking'] = 0;
+            in_array(2, $valores) ? $_SESSION['curso'] = 1 : $_SESSION['curso'] = 0;
+            in_array(3, $valores) ? $_SESSION['estudiante'] = 1 : $_SESSION['estudiante'] = 0;
+            in_array(4, $valores) ? $_SESSION['nota'] = 1 : $_SESSION['nota'] = 0;
+            in_array(5, $valores) ? $_SESSION['asistencia'] = 1 : $_SESSION['asistencia'] = 0;
+            in_array(6, $valores) ? $_SESSION['diario'] = 1 : $_SESSION['diario'] = 0;
+            in_array(7, $valores) ? $_SESSION['asignatura'] = 1 : $_SESSION['asignatura'] = 0;
 
 
             // entre a la reunion en meet
@@ -160,12 +157,10 @@ switch ($_GET["op"]) {
         $respuestajson = json_encode($fetch);
 
         if ($respuestajson == "null") {
-            echo 1;
+            echo 2;
         } else {
             echo 1;
         }
-
-
         break;
 
     case 'count':

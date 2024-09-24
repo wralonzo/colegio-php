@@ -9,8 +9,8 @@ if ($_SESSION['asignatura'] != 1) {
   <div class="content">
     <div class="page-header">
       <div class="page-title">
-        <h4>Editar asignatura</h4>
-        <h6>Actualizar una nueva Area de asignacion</h6>
+        <h4>Editar Grados</h4>
+        <h6>Actualizar Grados</h6>
       </div>
     </div>
     <form name="formulario" id="formulario" method="POST">
@@ -38,7 +38,7 @@ $idcat = $_GET["id"];
   $(document).ready(function() {
     var formData = new FormData();
     formData.append("id", Number(<?= $idcat ?>));
-    fetch("<?= getBaseUrl() ?>/controllers/asignatura.php?op=mostrar", {
+    fetch("<?= getBaseUrl() ?>/controllers/curso.php?op=mostrar", {
         method: 'POST',
         body: formData
       })
@@ -72,7 +72,7 @@ $idcat = $_GET["id"];
       formData.append("id", Number(<?= $idcat ?>));
 
       $.ajax({
-        url: "<?= getBaseUrl() ?>/controllers/asignatura.php?op=guardaryeditar",
+        url: "<?= getBaseUrl() ?>/controllers/curso.php?op=guardaryeditar",
         type: "POST",
         data: formData,
         contentType: false,
@@ -90,7 +90,7 @@ $idcat = $_GET["id"];
               timer: 1500
             })
             setTimeout(() => {
-              $(location).attr("href", "<?= getBaseUrl() ?>/views/asignatura");
+              $(location).attr("href", "<?= getBaseUrl() ?>/views/curso");
             }, 2000);
           } else {
             Swal.fire({

@@ -1,6 +1,6 @@
 <?php
 require '../template/header.php';
-if ($_SESSION['admin'] != 1) {
+if ($_SESSION['curso'] != 1) {
 	header("Location: " . getBaseUrl() . "/views/noacceso.php");
 }
 ?>
@@ -9,12 +9,12 @@ if ($_SESSION['admin'] != 1) {
 	<div class="content">
 		<div class="page-header">
 			<div class="page-title">
-				<h4>Listado de usuarios</h4>
-				<h6>Gestionar usuarios</h6>
+				<h4>Listado de clases del curso</h4>
+				<h6>Gestionar asignaturas</h6>
 			</div>
 			<div class="page-btn">
-				<a href="insert.php" class="btn btn-added"><img src="../../assets/img/icons/plus.svg" class="me-2" alt="img" />
-					Agregar usuario</a>
+				<a href="insertasignatura.php?id=<?= $_GET["id"] ?>" class="btn btn-added"><img src="../../assets/img/icons/plus.svg" class="me-2" alt="img" />
+					Agregar </a>
 			</div>
 		</div>
 
@@ -56,15 +56,13 @@ if ($_SESSION['admin'] != 1) {
 					</div>
 				</div>
 				<div class="">
-					<table class="table tabledata" id="wordset">
+					<table class="table tabledata">
 						<thead>
 							<tr>
-								<th>NOMBRE</th>
-								<th>TELEFONO</th>
-								<th>E-MAIL</th>
-								<th>USER</th>
-								<th>Imagen</th>
-								<th>ACCIONES</th>
+								<th>Id</th>
+								<th>Curso</th>
+								<th>Asignatura</th>
+								<th>Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -75,20 +73,22 @@ if ($_SESSION['admin'] != 1) {
 		</div>
 	</div>
 </div>
+
 <?php
+$idRegistro = $_GET["id"];
 require '../template/footer.php';
 ?>
 
 <script type="text/javascript">
 	function delayedFunction() {
-		$(location).attr("href", "<?= getBaseUrl() ?>/views/user");
+		$(location).attr("href", "<?= getBaseUrl() ?>/views/curso/asignatura.php?id=<?= $_GET["id"] ?>");
 	}
 
-	function desactivarUsuario(id) {
+	function desactivar(id) {
 		var formData = new FormData();
-		formData.append("idusuario", id);
+		formData.append("id", id);
 		$.ajax({
-			url: "<?= getBaseUrl() ?>/controllers/login.php?op=desactivar",
+			url: "<?= getBaseUrl() ?>/controllers/curso.php?op=eliminarAsignatura",
 			type: "POST",
 			data: formData,
 			contentType: false,
@@ -99,7 +99,7 @@ require '../template/footer.php';
 					Swal.fire({
 						position: 'top-end',
 						icon: 'success',
-						title: 'Usuario eliminado',
+						title: 'Curso eliminado',
 						showConfirmButton: false,
 						timer: 1500
 					});
@@ -109,7 +109,7 @@ require '../template/footer.php';
 					Swal.fire({
 						position: 'top-end',
 						icon: 'success',
-						title: 'Usuario no eliminado',
+						title: 'Curso no eliminada',
 						showConfirmButton: false,
 						timer: 1500
 					});
@@ -118,6 +118,9 @@ require '../template/footer.php';
 		});
 	}
 	$(document).ready(function() {
+		var formData = new FormData();
+		formData.append("id", <?php echo $idRegistro ?>);
+		console.log(formData)
 		$(".tabledata").DataTable({
 			bFilter: true,
 			sDom: "fBtlpi",
@@ -133,48 +136,16 @@ require '../template/footer.php';
 				$(".dataTables_filter").appendTo("#tableSearch");
 				$(".dataTables_filter").appendTo(".search-input");
 			},
+
 			"ajax": {
-				url: '<?= getBaseUrl() ?>/controllers/login.php?op=listar',
-				type: "get",
-				dataType: "json",
+				url: '<?= getBaseUrl() ?>/controllers/curso.php?op=listarAsignaturas&id=<?php echo $idRegistro ?>',
+				type: "GET",
+				body: formData,
 				error: function(e) {
 					console.log(e.responseText);
 				}
 			},
 		});
-
-		function activar(id) {
-			$.ajax({
-				url: "<?= getBaseUrl() ?>/controllers/login.php?op=desactivar",
-				type: "POST",
-				data: {
-					idusuario: id
-				},
-				contentType: false,
-				processData: false,
-				success: function(datos) {
-					if (datos == 1) {
-						Swal.fire({
-							position: 'top-end',
-							icon: 'success',
-							title: 'Usuario eliminado',
-							showConfirmButton: false,
-							timer: 1500
-						});
-						$(location).attr("href", "<?= getBaseUrl() ?>/views/user");
-					} else {
-						Swal.fire({
-							position: 'top-end',
-							icon: 'success',
-							title: 'Usuario no eliminado',
-							showConfirmButton: false,
-							timer: 1500
-						});
-					}
-				}
-
-			});
-		}
 	});
 </script>
 

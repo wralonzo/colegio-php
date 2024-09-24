@@ -84,22 +84,22 @@ if (!isset($_SESSION["nombre"])) {
                             href="javascript:void(0);"
                             class="dropdown-toggle nav-link userset"
                             data-bs-toggle="dropdown">
-                            <span class="user-img"><img src="<?= getBaseUrl() ?>/assets/img/profiles/avator1.jpg" alt="" />
+                            <span class="user-img"><img src="<?php echo isset($_SESSION["imagen"]) ? getBaseUrl() . '/files/usuarios/' . $_SESSION["imagen"] : getBaseUrl() . '/assets/img/profiles/avator1.jpg' ?>" alt="" />
                                 <span class="status online"></span></span>
                         </a>
                         <div class="dropdown-menu menu-drop-user">
                             <div class="profilename">
                                 <div class="profileset">
-                                    <span class="user-img"><img src="<?= getBaseUrl() ?>/assets/img/profiles/avator1.jpg" alt="" />
+                                    <span class="user-img"><img src="<?php echo isset($_SESSION["imagen"]) ? getBaseUrl() . '/files/usuarios/' . $_SESSION["imagen"] : getBaseUrl() . '/assets/img/profiles/avator1.jpg' ?>" alt="" />
                                         <span class="status online"></span></span>
                                     <div class="profilesets">
-                                        <h6>John Doe</h6>
-                                        <h5>Admin</h5>
+                                        <h6><?= isset($_SESSION["correo"]) ? $_SESSION["correo"] : '' ?></h6>
+                                        <h5><?= isset($_SESSION["login"]) ? $_SESSION["login"] : '' ?></h5>
                                     </div>
                                 </div>
                                 <hr class="m-0" />
                                 <a class="dropdown-item" href="profile.html">
-                                    <i class="me-2" data-feather="user"></i> Mi perfil</a>
+                                    <i class="me-2" data-feather="user"></i><?= isset($_SESSION["login"]) ? $_SESSION["login"] : '' ?></a>
                                 <hr class="m-0" />
                                 <a class="dropdown-item logout pb-0" href="<?= getBaseUrl() ?>/controllers/login.php?op=salir"><img
                                         src="<?= getBaseUrl() ?>/assets/img/icons/log-out.svg"
@@ -133,32 +133,26 @@ if (!isset($_SESSION["nombre"])) {
                                 </a>
                             </li>
                             <li>
-                                <a href="blankpage.html"><i data-feather="user"></i><span>Estudiantes</span>
+                                <a href="<?= getBaseUrl() ?>/views/estudiante"><i data-feather="user"></i><span>Estudiantes</span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="blankpage.html"><i data-feather="list"></i><span>Notas</span>
+                                <a href="<?= getBaseUrl() ?>/views/notas"><i data-feather="list"></i><span>Notas</span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="blankpage.html"><i data-feather="book"></i><span>Diario pedagogico</span>
+                                <a href="<?= getBaseUrl() ?>/views/diario"><i data-feather="book"></i><span>Diario pedagogico</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?= getBaseUrl() ?>/views/asistencia"><i data-feather="check"></i><span>Asistencias</span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="blankpage.html"><i class="fa fa-address-book"></i><span>Asignacion de recursos</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="blankpage.html"><i data-feather="check"></i><span>Asistencias</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="blankpage.html"><i data-feather="users"></i><span>Cursos</span>
+                                <a href="<?= getBaseUrl() ?>/views/curso"><i data-feather="users"></i><span>Grados</span>
                                 </a>
                             </li>
 

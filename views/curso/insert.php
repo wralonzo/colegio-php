@@ -1,6 +1,6 @@
 <?php
 require '../template/header.php';
-if ($_SESSION['asignatura'] != 1) {
+if ($_SESSION['curso'] != 1) {
   header("Location: " . getBaseUrl() . "/views/noacceso.php");
 }
 ?>
@@ -9,8 +9,8 @@ if ($_SESSION['asignatura'] != 1) {
   <div class="content">
     <div class="page-header">
       <div class="page-title">
-        <h4>Agregar asignatura</h4>
-        <h6>Crear una nueva Area de asignacion</h6>
+        <h4>Agregar Grados</h4>
+        <h6>Crear un nuevo Grados</h6>
       </div>
     </div>
     <form name="formulario" id="formulario" method="POST">
@@ -19,13 +19,13 @@ if ($_SESSION['asignatura'] != 1) {
           <div class="row">
             <div class="col-lg-12">
               <div class="form-group">
-                <label>Nombre de la asignatura</label>
-                <textarea name="nombre" class="form-control" placeholder="Nombre de la asignatura" required></textarea>
+                <label>Nombre del curso</label>
+                <textarea name="nombre" class="form-control" placeholder="Nombre de la curso" required></textarea>
               </div>
             </div>
             <div class="col-lg-12">
               <button type="submit" class="btn btn-submit me-2">Guardar</button>
-              <a href="<?= getBaseUrl() ?>/views/asignatura" class="btn btn-cancel">Cancelar</a>
+              <a href="<?= getBaseUrl() ?>/views/curso" class="btn btn-cancel">Cancelar</a>
             </div>
           </div>
         </div>
@@ -47,9 +47,10 @@ require '../template/footer.php';
       e.preventDefault(); //No se activará la acción predeterminada del evento
       $("#btnGuardar").prop("disabled", true);
       var formData = new FormData($("#formulario")[0]);
+      formData.append('idcurso', Number(<?= $_GET["id"] ?>));
 
       $.ajax({
-        url: "<?= getBaseUrl() ?>/controllers/asignatura.php?op=guardaryeditar",
+        url: "<?= getBaseUrl() ?>/controllers/curso.php?op=guardaryeditar",
         type: "POST",
         data: formData,
         contentType: false,
@@ -61,13 +62,13 @@ require '../template/footer.php';
             Swal.fire({
               position: 'top-end',
               icon: 'success',
-              title: 'Asignatura registrada',
+              title: 'curso registrado',
               showConfirmButton: false,
               timer: 1500
             });
             $("#btnGuardar").prop("disabled", false);
             setTimeout(() => {
-              $(location).attr("href", "<?= getBaseUrl() ?>/views/asignatura");
+              $(location).attr("href", "<?= getBaseUrl() ?>/views/curso");
             }, 2000);
           } else {
             console.log(datos);

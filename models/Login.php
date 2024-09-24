@@ -56,7 +56,7 @@ class Login
 	//Implementamos un método para editar registros
 	public function editar($idusuario, $nombre, $telefono, $email, $login, $clave, $imagen, $permisos, $rol)
 	{
-		$sql = "UPDATE usuario SET nombre='$nombre',telefono='$telefono',email='$email',login='$login',clave='$clave',imagen='$imagen',rol='$rol' WHERE idusuario='$idusuario'";
+		$sql = "UPDATE usuario SET nombre='$nombre',telefono='$telefono',email='$email',login='$login',imagen='$imagen',rol='$rol' WHERE idusuario='$idusuario'";
 		ejecutarConsulta($sql);
 		$sqldel = "DELETE FROM usuario_permiso WHERE idusuario='$idusuario'";
 		ejecutarConsulta($sqldel);
@@ -110,7 +110,7 @@ class Login
 	//Función para verificar el acceso al sistema
 	public function verificar($login, $clave)
 	{
-		$sql = "SELECT u.idusuario,u.nombre,u.telefono,u.email,u.cargo,u.imagen,u.login, u.clave, u.rol FROM usuario u
+		$sql = "SELECT * FROM usuario u
 		WHERE u.login='$login' AND u.clave='$clave' AND estado = 1";
 		return ejecutarConsulta($sql);
 	}
