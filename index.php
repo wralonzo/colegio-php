@@ -31,7 +31,7 @@
                             <img src="assets/img/logo.png" alt="img">
                         </div>
                         <div class="login-userheading">
-                            <h3>Inciar sesión</h3>
+                            <h3>Login Sistema de Notas</h3>
                             <h4>Por favor ingresar tus credenciales</h4>
                         </div>
                         <form method="post" id="frmAcceso">

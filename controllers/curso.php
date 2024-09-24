@@ -49,6 +49,15 @@ try {
             //Codificar el resultado utilizando json
             echo json_encode($rspta);
             break;
+
+        case 'all':
+            $rspta = $task->listar();
+            $data = array();
+            while ($reg = $rspta->fetch_object()) {
+                array_push($data, $reg);
+            }
+            echo json_encode($data);
+            break;
         case 'listar':
             $rspta = $task->listar();
             $data = array();

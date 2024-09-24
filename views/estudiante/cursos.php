@@ -1,6 +1,6 @@
 <?php
 require '../template/header.php';
-if ($_SESSION['categoria'] != 1) {
+if ($_SESSION['curso'] != 1) {
 	header("Location: " . getBaseUrl() . "/views/noacceso.php");
 }
 ?>
@@ -9,12 +9,12 @@ if ($_SESSION['categoria'] != 1) {
 	<div class="content">
 		<div class="page-header">
 			<div class="page-title">
-				<h4>Listado de asignaturas</h4>
-				<h6>Gestionar asignaturas</h6>
+				<h4>Listado de cursos del estudiante</h4>
+				<h6>Gestionar cursos del estudiante</h6>
 			</div>
 			<div class="page-btn">
-				<a href="insert.php" class="btn btn-added"><img src="../../assets/img/icons/plus.svg" class="me-2" alt="img" />
-					Agregar asignatura</a>
+				<a href="asingar.php?id=<?= $_GET["id"] ?>" class="btn btn-added"><img src="../../assets/img/icons/plus.svg" class="me-2" alt="img" />
+					Agregar </a>
 			</div>
 		</div>
 
@@ -55,55 +55,13 @@ if ($_SESSION['categoria'] != 1) {
 						</ul>
 					</div>
 				</div>
-
-				<!-- <div class="card" id="filter_inputs">
-					<div class="card-body pb-0">
-						<div class="row">
-							<div class="col-lg-2 col-sm-6 col-12">
-								<div class="form-group">
-									<label>Category</label>
-									<select class="select">
-										<option>Choose Category</option>
-										<option>Computers</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-lg-2 col-sm-6 col-12">
-								<div class="form-group">
-									<label>Sub Category</label>
-									<select class="select">
-										<option>Choose Sub Category</option>
-										<option>Fruits</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-lg-2 col-sm-6 col-12">
-								<div class="form-group">
-									<label>Category Code</label>
-									<select class="select">
-										<option>CT001</option>
-										<option>CT002</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-lg-1 col-sm-6 col-12 ms-auto">
-								<div class="form-group">
-									<label>&nbsp;</label>
-									<a class="btn btn-filters ms-auto"><img
-											src="assets/img/icons/search-whites.svg"
-											alt="img" /></a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> -->
-
 				<div class="">
 					<table class="table tabledata">
 						<thead>
 							<tr>
 								<th>Id</th>
-								<th>Nombre</th>
+								<th>Curso</th>
+								<th>Estudiante</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
@@ -117,19 +75,20 @@ if ($_SESSION['categoria'] != 1) {
 </div>
 
 <?php
+$idRegistro = $_GET["id"];
 require '../template/footer.php';
 ?>
 
 <script type="text/javascript">
 	function delayedFunction() {
-		$(location).attr("href", "<?= getBaseUrl() ?>/views/asignatura");
+		$(location).attr("href", "<?= getBaseUrl() ?>/views/estudiante/cursos.php?id=<?= $_GET["id"] ?>");
 	}
 
 	function desactivar(id) {
 		var formData = new FormData();
-		formData.append("id", id);
+		formData.append("idcursoestudiante", id);
 		$.ajax({
-			url: "<?= getBaseUrl() ?>/controllers/asignatura.php?op=desactivar",
+			url: "<?= getBaseUrl() ?>/controllers/estudiante.php?op=eliminarAsignar",
 			type: "POST",
 			data: formData,
 			contentType: false,
@@ -140,7 +99,7 @@ require '../template/footer.php';
 					Swal.fire({
 						position: 'top-end',
 						icon: 'success',
-						title: 'Categoría eliminada',
+						title: 'Curso eliminado',
 						showConfirmButton: false,
 						timer: 1500
 					});
@@ -150,7 +109,7 @@ require '../template/footer.php';
 					Swal.fire({
 						position: 'top-end',
 						icon: 'success',
-						title: 'Categoría no eliminada',
+						title: 'Curso no eliminada',
 						showConfirmButton: false,
 						timer: 1500
 					});
@@ -159,6 +118,9 @@ require '../template/footer.php';
 		});
 	}
 	$(document).ready(function() {
+		var formData = new FormData();
+		formData.append("id", <?php echo $idRegistro ?>);
+		console.log(formData)
 		$(".tabledata").DataTable({
 			bFilter: true,
 			sDom: "fBtlpi",
@@ -176,9 +138,9 @@ require '../template/footer.php';
 			},
 
 			"ajax": {
-				url: '<?= getBaseUrl() ?>/controllers/asignatura.php?op=listar',
-				type: "get",
-				dataType: "json",
+				url: '<?= getBaseUrl() ?>/controllers/estudiante.php?op=listarcursos&id=<?php echo $idRegistro ?>',
+				type: "GET",
+				body: formData,
 				error: function(e) {
 					console.log(e.responseText);
 				}

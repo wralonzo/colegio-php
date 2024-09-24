@@ -5,6 +5,7 @@ require "../config/Conexion.php";
 class Estudiante
 {
 	private $table = 'estudiante';
+	private $cursoestudiante = 'cursoestudiante';
 	//Implementamos nuestro constructor
 	public function __construct() {}
 
@@ -69,6 +70,34 @@ class Estudiante
 	public function listar()
 	{
 		$sql = "SELECT * FROM $this->table";
+		return ejecutarConsulta($sql);
+	}
+
+	public function listarCursos($id)
+	{
+		$sql = "SELECT cu.nombre as curso, est.nombres as estudiante, cursstu.idcursoestudiante FROM cursoestudiante cursstu 
+		INNER JOIN estudiante est  ON est.idestudiante = cursstu.idestudiante
+		INNER JOIN curso cu ON cursstu.idcurso = cu.idcurso
+		WHERE est.idestudiante = $id";
+		return ejecutarConsulta($sql);
+	}
+
+	public function insertarcurso($curso, $idestudiante)
+	{
+		try {
+			$sql = "INSERT INTO $this->cursoestudiante(idcurso, idestudiante)VALUES(?, ?);";
+			$params = array($curso, $idestudiante);
+			$result = $this->ejecutarConsulta($sql, $params);
+			$idusuarionew = $result['last_id'];
+			return $idusuarionew;
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+
+	public function desactivarcurso($id)
+	{
+		$sql = "DELETE FROM $this->cursoestudiante WHERE idcursoestudiante = $id";
 		return ejecutarConsulta($sql);
 	}
 }
