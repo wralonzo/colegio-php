@@ -30,11 +30,11 @@ class Adjunto
 		}
 	}
 
-	public function insertar($idUser, $path)
+	public function insertar($idUser, $path, $descripcion)
 	{
 		try {
-			$sql = "INSERT INTO $this->table(iduser, path)VALUES(?, ?);";
-			$params = array($idUser, $path);
+			$sql = "INSERT INTO $this->table(iduser, path, descripcion)VALUES(?, ?, ?);";
+			$params = array($idUser, $path, $descripcion);
 			$result = $this->ejecutarConsulta($sql, $params);
 			$idusuarionew = $result['last_id'];
 			return $idusuarionew;

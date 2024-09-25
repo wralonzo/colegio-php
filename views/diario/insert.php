@@ -19,17 +19,28 @@ if ($_SESSION['asignatura'] != 1) {
           <div class="row">
             <div class="col-lg-12">
               <div class="form-group">
-                <label>Nombre de la asignatura</label>
-                <textarea name="nombre" class="form-control" placeholder="Nombre de la asignatura" required></textarea>
+                <label>Descripcion</label>
+                <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion" required></textarea>
               </div>
             </div>
+
             <div class="col-lg-12">
-              <button type="submit" class="btn btn-submit me-2">Guardar</button>
-              <a href="<?= getBaseUrl() ?>/views/asignatura" class="btn btn-cancel">Cancelar</a>
+              <div class="form-group">
+                <label>Sube un archivo</label>
+                <div class="image-upload image-upload-new">
+                  <input type="file" name="imagen" />
+                  <div class="image-uploads">
+                    <img src="../../assets/img/icons/upload.svg" alt="img" />
+                    <h4>Sube un archivo</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <button type="submit" class="btn btn-submit me-2">Guardar</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
     </form>
   </div>
 </div>
@@ -49,7 +60,7 @@ require '../template/footer.php';
       var formData = new FormData($("#formulario")[0]);
 
       $.ajax({
-        url: "<?= getBaseUrl() ?>/controllers/asignatura.php?op=guardaryeditar",
+        url: "<?= getBaseUrl() ?>/controllers/adjunto.php?op=uploadFile",
         type: "POST",
         data: formData,
         contentType: false,
@@ -61,13 +72,13 @@ require '../template/footer.php';
             Swal.fire({
               position: 'top-end',
               icon: 'success',
-              title: 'Asignatura registrada',
+              title: 'Adjunto registrado',
               showConfirmButton: false,
               timer: 1500
             });
             $("#btnGuardar").prop("disabled", false);
             setTimeout(() => {
-              $(location).attr("href", "<?= getBaseUrl() ?>/views/asignatura");
+              $(location).attr("href", "<?= getBaseUrl() ?>/views/diario");
             }, 2000);
           } else {
             console.log(datos);

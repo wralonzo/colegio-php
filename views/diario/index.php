@@ -81,7 +81,7 @@ require '../template/footer.php';
 
 <script type="text/javascript">
 	function delayedFunction() {
-		$(location).attr("href", "<?= getBaseUrl() ?>/views/user");
+		$(location).attr("href", "<?= getBaseUrl() ?>/views/diario");
 	}
 
 	function desactivar(id) {
@@ -99,7 +99,7 @@ require '../template/footer.php';
 					Swal.fire({
 						position: 'top-end',
 						icon: 'success',
-						title: 'Categoría eliminada',
+						title: 'Adjunto eliminado',
 						showConfirmButton: false,
 						timer: 1500
 					});
@@ -109,7 +109,7 @@ require '../template/footer.php';
 					Swal.fire({
 						position: 'top-end',
 						icon: 'success',
-						title: 'Categoría no eliminada',
+						title: 'Adjunto no eliminado',
 						showConfirmButton: false,
 						timer: 1500
 					});
