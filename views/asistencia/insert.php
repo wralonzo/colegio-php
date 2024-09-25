@@ -9,7 +9,7 @@ if ($_SESSION['curso'] != 1) {
   <div class="content">
     <div class="page-header">
       <div class="page-title">
-        <h4>Agregar Notas por grado</h4>
+        <h4>Agregar asistencia por grado</h4>
       </div>
     </div>
     <form name="formulario" id="formulario" method="POST">
@@ -24,11 +24,15 @@ if ($_SESSION['curso'] != 1) {
               </div>
             </div>
 
+            <input type="hidden" name="idCurso" id="idcurso">
+
             <div class="container">
               <table id="studentTable" border="1" class="table">
                 <thead>
                   <tr id="tableHeaders">
                     <th>Nombre del Estudiante</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -80,6 +84,8 @@ require '../template/footer.php';
     $('#idcurso').on('change', function() {
       const selectedCurso = this.value;
       if (selectedCurso) {
+        $('#idcurso').val(selectedCurso);
+        const today = new Date().toISOString().substr(0, 10)
         fetch(`<?= getBaseUrl() ?>/controllers/curso.php?op=estudianteCurso&id=${selectedCurso}`, {
             method: 'GET',
           })
@@ -97,43 +103,31 @@ require '../template/footer.php';
             studentTableBody.empty(); // Limpiar el cuerpo de la tabla (filas)
             // studentTableHeaders.find("th:gt(0)").remove(); // Limpiar los encabezados excepto el primero (nombre del estudiante)
 
-            fetch(`<?= getBaseUrl() ?>/controllers/curso.php?op=asignaturaCursos&id=${selectedCurso}`, {
-                method: 'GET',
-              })
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error(`HTTP error: ${response.status}`);
-                }
-                return response.json();
-              })
-              .then(asignaturas => {
-                // Construir los encabezados de las asignaturas
-                let headerHtml = '<th>Nombre del Estudiante</th>';
-                asignaturas.forEach(function(asignatura) {
-                  headerHtml += `<th>${asignatura.nombre}</th>`;
-                });
+            let row = '';
+            data.forEach(function(estudiante) {
+              // Iniciar la fila con el nombre del estudiante y añadir el atributo 'data-estudiante-id' para capturar el ID
+              let row = `<tr>
+               <td data-estudiante-id="${estudiante.idestudiante}">${estudiante.nombres}</td>`;
 
-                // Añadir los encabezados al thead
-                studentTableHeaders.html(headerHtml);
+              // Añadir un campo de entrada tipo 'date' para cada estudiante
+              row += `<td data-estudiante-id="${estudiante.idestudiante}">
+                <input class="form-control" type="date" value="<?= date('Y-m-d') ?>" name="input_${estudiante.idestudiante}" id="input_${estudiante.idestudiante}" />
+              </td>`;
 
-                console.log(data);
-                let row = '';
-                data.forEach(function(estudiante) {
-                  row = `<tr><td data-estudiante-id="${estudiante.idestudiante}">${estudiante.nombres}</td>`;
+              // Añadir un campo 'select' para elegir el estado de asistencia
+              row += `<td data-estudiante-id="${estudiante.idestudiante}">
+                <select name="estado_${estudiante.idestudiante}" id="estado_${estudiante.idestudiante}" class="form-control" required>
+                  <option value="Presente">Presente</option>
+                  <option value="Permiso">Permiso</option>
+                  <option value="Ausente">Ausente</option>
+                </select>
+              </td>`;
+              row += `</tr>`;
+              studentTableBody.append(row);
+            });
 
-                  asignaturas.forEach(function(asignatura) {
-                    row += `<td><input class="form-control" type="text" name="input_${estudiante.idestudiante}_${asignatura.idasignatura}" id="input_${estudiante.idestudiante}_${asignatura.idasignatura}" placeholder="Ingrese nota" /></td>`;
-                  });
-
-                  row += `</tr>`;
-                  studentTableBody.append(row);
-                });
-                // Agregar la fila a la tabla
-              })
-              .catch(error => {
-                console.error('Error fetching data:', error);
-              });
-          });
+          });; // Formato 'YYYY-MM-DD'
+        // document.getElementById('input_${estudiante.idestudiante}').value = today;
       }
     });
 
@@ -141,26 +135,29 @@ require '../template/footer.php';
 
     function guardaryeditarCurso(e) {
       e.preventDefault();
-
       const notas = [];
       const formData = new FormData();
       // Recorrer cada fila de la tabla
-      $('#studentTable tbody tr').each(function() {
-        const row = $(this);
-        const estudianteId = row.find('td:first').data('estudiante-id'); // Obtener ID del estudiante
+      var idCurso = $('#idcurso').val();
+      const studentTableBody = document.querySelector('#studentTable tbody');
+      studentTableBody.querySelectorAll('tr').forEach(function(row) {
+        // Obtener el ID del estudiante desde el atributo 'data-estudiante-id'
+        const estudianteId = row.querySelector('td[data-estudiante-id]').getAttribute('data-estudiante-id');
 
-        row.find('input').each(function() {
-          const input = $(this);
-          const asignaturaId = input.attr('id').split('_')[2]; // Obtener ID de la asignatura
-          const nota = input.val(); // Obtener la nota ingresada
+        // Obtener el valor de la fecha del input
+        const fecha = row.querySelector(`input[name="input_${estudianteId}"]`).value;
 
-          // Agregar las notas al FormData
-          formData.append(`notas[${estudianteId}][${asignaturaId}]`, nota);
-        });
+        // Obtener el valor seleccionado del campo 'select'
+        const asistencia = row.querySelector(`select[name="estado_${estudianteId}"]`).value;
+
+        // Agregar los datos al FormData
+        formData.append(`estudiantes[${estudianteId}][fecha]`, fecha);
+        formData.append(`estudiantes[${estudianteId}][estado]`, asistencia);
+        formData.append(`estudiantes[${estudianteId}][idcurso]`, idCurso);
       });
 
       console.log(notas);
-      fetch('<?= getBaseUrl() ?>/controllers/nota.php?op=guardaryeditar', {
+      fetch('<?= getBaseUrl() ?>/controllers/asistencia.php?op=guardaryeditar', {
           method: 'POST',
           body: formData // Convertir el array de datos a JSON
         })
@@ -182,7 +179,7 @@ require '../template/footer.php';
           });
 
           setTimeout(() => {
-            $(location).attr("href", "<?= getBaseUrl() ?>/views/notas");
+            $(location).attr("href", "<?= getBaseUrl() ?>/views/asistencia/");
           }, 2000);
         })
         .catch(error => {

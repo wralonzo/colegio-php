@@ -112,6 +112,25 @@ try {
             echo json_encode($results);
 
             break;
+        case 'estudianteCurso':
+            $idcat = $_GET["id"];
+            $rspta = $task->cursosEstudiantes($idcat);
+            $data = array();
+            while ($reg = $rspta->fetch_object()) {
+                array_push($data, $reg);
+            }
+            echo json_encode($data);
+            break;
+
+        case 'asignaturaCursos':
+            $idcat = $_GET["id"];
+            $rspta = $task->cursoAsignaturas($idcat);
+            $data = array();
+            while ($reg = $rspta->fetch_object()) {
+                array_push($data, $reg);
+            }
+            echo json_encode($data);
+            break;
     }
 } catch (Exception $e) {
     var_dump($e);

@@ -13,81 +13,51 @@ try {
 
     switch ($_GET["op"]) {
         case 'uploadFile':
-            $idtask = $_POST["idtask"];
-            $task = new Task();
-
-            $directorio = '../files/task/' . "$idtask";
+            $idusuario = $_SESSION['idusuario'];;
+            $directorio = '../files/diario/' . "$idusuario";
             $ext = explode(".", $_FILES["imagen"]["name"]);
             $rspta = 0;
-            $usuario = $_SESSION['idusuario'];
             if (end($ext) != '') {
                 $imagen = round(microtime(true)) . '.' . end($ext);
                 if (!is_dir($directorio)) {
                     mkdir($directorio, 0777);
                 }
                 move_uploaded_file($_FILES["imagen"]["tmp_name"], $directorio . "/" . $imagen);
-                $rspta = $task->insertarFile($imagen, $idtask, $usuario);
+                $rspta = $file->insertar($idusuario, $imagen,);
             }
             echo $rspta != 0 ? 1 : 2;
             break;
         case 'desactivar':
-            $dataFile = $file->mostrarFile($id);
-            $path =  '../files/task/' . $dataFile['idtask'] . '/' . $dataFile['nombre'];
-            // var_dump($_SERVER['DOCUMENT_ROOT']);
-            chmod($path, 0777);
-            if (file_exists($path)) {
-                $delFile = unlink($path);
-                if ($delFile) {
-                    $rspta = $file->desactivar($id);
-                    echo $rspta ? 1 : 0;
-                    break;
-                }
-            }
-            echo 0;
+            // $dataFile = $file->mostrarFile($id);
+            // $path =  '../files/task/' . $dataFile['idtask'] . '/' . $dataFile['nombre'];
+            // // var_dump($_SERVER['DOCUMENT_ROOT']);
+            // chmod($path, 0777);
+            // if (file_exists($path)) {
+            //     $delFile = unlink($path);
+            //     if ($delFile) {
+            //         $rspta = $file->desactivar($id);
+            //         echo $rspta ? 1 : 0;
+            //         break;
+            //     }
+            // }
+            // echo 0;
 
             break;
-        case 'filestask':
-            $idTask = $_GET['idtask'];
-            $data = array();
-            $rspta = $file->mostrarTask($idTask);
-            while ($reg = $rspta->fetch_object()) {
-                $date = new DateTime($reg->fechavencimiento);
-                $data[] = array(
-                    "0" =>
-                    ' <a download target="_blank" class="btn btn-primary" href="' . getBaseUrl() . '/files/task/' . $reg->idtask . '/' . $reg->nombre . '"><i class="now-ui-icons files_box"></i></a>' .
-                        ' <button class="btn btn-danger" onclick="desactivar(' . $reg->id . ')"><i class="now-ui-icons ui-1_simple-remove"></i></button>',
-                    "1" => $reg->id,
-                    "2" => $reg->nombre,
-                    "3" => $reg->idtask,
-                    "4" => $date->format('d/m/Y'),
-                );
-            }
-            $results = array(
-                "sEcho" => 1,
-                "iTotalRecords" => count($data),
-                "iTotalDisplayRecords" => count($data),
-                "aaData" => $data
-            );
-            echo json_encode($results);
-            break;
         case 'listar':
-            $dataTask = array();
-            $idusuario = $_SESSION['idusuario'];
-            $tasks = $file->listarTasks($idusuario);
+            $rspta = $file->listar();
             $data = array();
-            while ($regt = $tasks->fetch_object()) {
-                $dataTask[] = $regt->idtask;
-            }
-            $rspta = $file->listar($rol, $dataTask);
             while ($reg = $rspta->fetch_object()) {
                 $data[] = array(
-                    "0" =>
-                    ' <a style="width: 10px;" download target="_blank" class="btn btn-primary" href="' . getBaseUrl() . '/files/task/' . $reg->idtask . '/' . $reg->nombre . '"><i class="now-ui-icons files_box"></i></a>' .
-                        ' <button style="width: 10px;" class="btn btn-danger" onclick="desactivar(' . $reg->id . ')"><i class="now-ui-icons ui-1_simple-remove"></i></button>',
-                    "1" => $reg->id,
-                    "2" => $reg->nombre,
-                    "3" => $reg->idtask,
-                    "4" => $reg->datecreated,
+
+                    "0" => $reg->iddiario,
+                    "1" => $reg->nombre,
+                    "2" => $reg->path,
+                    "3" => $reg->datecreated,
+                    "4" =>
+                    ' <a class="me-3" href="' . getBaseUrl() . '/views/diario/edit.php?id=' . $reg->iddiario . '"><img src="../../assets/img/icons/edit.svg" alt="img" /></a>
+                            <a onclick="desactivar(' . $reg->iddiario . ')" class="me-3 confirm-text" href="#">
+                                <img src="../../assets/img/icons/delete.svg" alt="img" />
+                            </a>',
                 );
             }
             $results = array(
@@ -97,6 +67,7 @@ try {
                 "aaData" => $data
             );
             echo json_encode($results);
+
             break;
 
         case 'count':

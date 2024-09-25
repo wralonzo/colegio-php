@@ -28,7 +28,7 @@
                 <div class="login-content">
                     <div class="login-userset">
                         <div class="login-logo">
-                            <img src="assets/img/logo.png" alt="img">
+                            <img src="assets/img/favicon.jpg" alt="img">
                         </div>
                         <div class="login-userheading">
                             <h3>Login Sistema de Notas</h3>

@@ -2,11 +2,11 @@
 //Incluímos inicialmente la conexión a la base de datos
 require "../config/Conexion.php";
 
-class Adjunto
+class Nota
 {
+	private $table = 'nota';
 	//Implementamos nuestro constructor
 	public function __construct() {}
-	private $table = 'diario';
 
 	private function ejecutarConsulta($sql, $params,)
 	{
@@ -30,11 +30,13 @@ class Adjunto
 		}
 	}
 
-	public function insertar($idUser, $path)
+	//Implementamos un método para insertar registros
+	public function insertar($idestudiante, $idasingatura, $nota)
 	{
 		try {
-			$sql = "INSERT INTO $this->table(iduser, path)VALUES(?, ?);";
-			$params = array($idUser, $path);
+
+			$sql = "INSERT INTO $this->table(idestudiante, idasignatura, nota)VALUES(?, ?, ?);";
+			$params = array($idestudiante, $idasingatura, $nota);
 			$result = $this->ejecutarConsulta($sql, $params);
 			$idusuarionew = $result['last_id'];
 			return $idusuarionew;
@@ -43,30 +45,36 @@ class Adjunto
 		}
 	}
 
+	//Implementamos un método para editar registros
+	public function editar($id, $idestudiante, $idasingatura, $nota)
+	{
+		$sql = "UPDATE $this->table SET idestudiante=$idestudiante, idasingatura = $idasingatura, nota = $nota  WHERE idnota='$id'";
+		return ejecutarConsulta($sql);
+	}
+
 	//Implementamos un método para desactivar categorías
 	public function desactivar($id)
 	{
-		$sql = "DELETE FROM $this->table WHERE iddiario = $id";
+		$sql = "DELETE FROM $this->table WHERE idnota = $id";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementar un método para mostrar los datos de un registro a modificar
 	public function mostrar($id)
 	{
-		$sql = "SELECT * FROM $this->table WHERE iddiario='$id'";
+		$sql = "SELECT * FROM $this->table WHERE idnota='$id'";
 		return ejecutarConsultaSimpleFila($sql);
 	}
-
 	//Implementar un método para listar los registros
 	public function listar()
 	{
-		$sql = "SELECT u.nombre, diar.iddiario, diar.path, diar.datecreated, diar.iduser FROM $this->table diar INNER JOIN usuario u ON u.idusuario = diar.iduser ORDER BY diar.iddiario DESC";
-		return ejecutarConsulta($sql);
-	}
-
-	public function countMonth()
-	{
-		$sql = "SELECT MONTH(datecreated) AS month, COUNT(*) AS user_count FROM $this->table WHERE estado = 1 GROUP BY MONTH(datecreated) ORDER BY MONTH(datecreated);";
+		$sql = "SELECT notas.idnota, notas.nota, est.nombres as estudiante, asi.nombre as asignatura, cu.nombre as curso 
+		FROM $this->table notas
+		INNER JOIN estudiante as est ON est.idestudiante = notas.idestudiante
+		INNER JOIN asignatura as asi ON asi.idasignatura = notas.idasignatura
+        INNER JOIN asignaturacurso asicu ON asicu.idasingatura = asi.idasignatura
+		INNER JOIN curso as cu on cu.idcurso = asicu.idcurso
+		";
 		return ejecutarConsulta($sql);
 	}
 }

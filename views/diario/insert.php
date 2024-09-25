@@ -1,6 +1,6 @@
 <?php
 require '../template/header.php';
-if ($_SESSION['curso'] != 1) {
+if ($_SESSION['asignatura'] != 1) {
   header("Location: " . getBaseUrl() . "/views/noacceso.php");
 }
 ?>
@@ -9,7 +9,8 @@ if ($_SESSION['curso'] != 1) {
   <div class="content">
     <div class="page-header">
       <div class="page-title">
-        <h4>Agregar Cursos</h4>
+        <h4>Agregar adjunto</h4>
+        <h6>Crear nuevo adjunto</h6>
       </div>
     </div>
     <form name="formulario" id="formulario" method="POST">
@@ -18,14 +19,13 @@ if ($_SESSION['curso'] != 1) {
           <div class="row">
             <div class="col-lg-12">
               <div class="form-group">
-                <label>Selecciona el curso</label>
-                <select name="idasignatura" id="idasignatura" class="select" required>
-                </select>
+                <label>Nombre de la asignatura</label>
+                <textarea name="nombre" class="form-control" placeholder="Nombre de la asignatura" required></textarea>
               </div>
             </div>
             <div class="col-lg-12">
               <button type="submit" class="btn btn-submit me-2">Guardar</button>
-              <a href="<?= getBaseUrl() ?>/views/curso/asignatura.php?id=<?= $_GET["id"] ?>" class="btn btn-cancel">Cancelar</a>
+              <a href="<?= getBaseUrl() ?>/views/asignatura" class="btn btn-cancel">Cancelar</a>
             </div>
           </div>
         </div>
@@ -39,58 +39,35 @@ require '../template/footer.php';
 <script>
   $(document).ready(function() {
     $("#formulario").on("submit", function(e) {
-      guardaryeditarCurso(e);
-    })
-
-    fetch("<?= getBaseUrl() ?>/controllers/asignatura.php?op=all", {
-        method: 'GET',
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
-        const selectElement = document.getElementById('idasignatura');
-        selectElement.innerHTML = '<option value="">Selecciona una opción</option>';
-        data.forEach(item => {
-          const option = document.createElement('option'); // Cambiado de 'idasignatura' a 'option'
-          option.value = item.idasignatura; // El valor que se envía al seleccionar
-          option.textContent = item.nombre; // Lo que se muestra en el select
-          selectElement.appendChild(option); // Agregar la opción al select
-        });
-
-      });
-
-    $("#formulario").on("submit", function(e) {
       guardaryeditar(e);
     })
 
-
-    function guardaryeditarCurso(e) {
-      e.preventDefault();
+    function guardaryeditar(e) {
+      console.log('funcion guardaryeditar');
+      e.preventDefault(); //No se activará la acción predeterminada del evento
+      $("#btnGuardar").prop("disabled", true);
       var formData = new FormData($("#formulario")[0]);
-      formData.append("idcurso", Number(<?= $_GET['id'] ?>));
+
       $.ajax({
-        url: "<?= getBaseUrl() ?>/controllers/curso.php?op=agregarAsignatura",
+        url: "<?= getBaseUrl() ?>/controllers/asignatura.php?op=guardaryeditar",
         type: "POST",
         data: formData,
         contentType: false,
         processData: false,
+
         success: function(datos) {
           console.log('datos: ', datos);
           if (datos == 1) {
             Swal.fire({
               position: 'top-end',
               icon: 'success',
-              title: 'curso registrado',
+              title: 'Asignatura registrada',
               showConfirmButton: false,
               timer: 1500
             });
+            $("#btnGuardar").prop("disabled", false);
             setTimeout(() => {
-              $(location).attr("href", "<?= getBaseUrl() ?>/views/curso/asignatura.php?id=<?= $_GET["id"] ?>");
+              $(location).attr("href", "<?= getBaseUrl() ?>/views/asignatura");
             }, 2000);
           } else {
             console.log(datos);

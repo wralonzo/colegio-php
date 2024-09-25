@@ -9,12 +9,12 @@ if ($_SESSION['estudiante'] != 1) {
 	<div class="content">
 		<div class="page-header">
 			<div class="page-title">
-				<h4>Listado de notas</h4>
-				<h6>Gestionar notas</h6>
+				<h4>Listado de asistencias</h4>
+				<h6>Gestionar asistencias</h6>
 			</div>
 			<div class="page-btn">
 				<a href="insert.php" class="btn btn-added"><img src="../../assets/img/icons/plus.svg" class="me-2" alt="img" />
-					Agregar estudiante</a>
+					Agregar asistencia por grados</a>
 			</div>
 		</div>
 
@@ -60,12 +60,11 @@ if ($_SESSION['estudiante'] != 1) {
 						<thead>
 							<tr>
 								<th>Id</th>
-								<th>Nombres</th>
-								<th>Papeleria</th>
-								<th>Numero mobile</th>
-								<th>Direccion</th>
-								<th>Edad</th>
-								<th>Acciones</th>
+								<th>Estudiante</th>
+								<th>Nota</th>
+								<th>Asignatura</th>
+								<th>Curso</th>
+								<!-- <th>Acciones</th> -->
 							</tr>
 						</thead>
 						<tbody>
@@ -83,14 +82,14 @@ require '../template/footer.php';
 
 <script type="text/javascript">
 	function delayedFunction() {
-		$(location).attr("href", "<?= getBaseUrl() ?>/views/estudiante");
+		$(location).attr("href", "<?= getBaseUrl() ?>/views/notas");
 	}
 
 	function desactivar(id) {
 		var formData = new FormData();
 		formData.append("id", id);
 		$.ajax({
-			url: "<?= getBaseUrl() ?>/controllers/estudiante.php?op=desactivar",
+			url: "<?= getBaseUrl() ?>/controllers/nota.php?op=desactivar",
 			type: "POST",
 			data: formData,
 			contentType: false,
@@ -137,7 +136,7 @@ require '../template/footer.php';
 			},
 
 			"ajax": {
-				url: '<?= getBaseUrl() ?>/controllers/estudiante.php?op=listar',
+				url: '<?= getBaseUrl() ?>/controllers/nota.php?op=listar',
 				type: "get",
 				dataType: "json",
 				error: function(e) {

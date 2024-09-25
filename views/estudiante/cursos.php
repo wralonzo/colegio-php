@@ -60,7 +60,7 @@ if ($_SESSION['curso'] != 1) {
 						<thead>
 							<tr>
 								<th>Id</th>
-								<th>Curso</th>
+								<th>Grado</th>
 								<th>Estudiante</th>
 								<th>Acciones</th>
 							</tr>

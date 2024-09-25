@@ -1,6 +1,6 @@
 <?php
 require '../template/header.php';
-if ($_SESSION['curso'] != 1) {
+if ($_SESSION['estudiante'] != 1) {
 	header("Location: " . getBaseUrl() . "/views/noacceso.php");
 }
 ?>
@@ -9,12 +9,12 @@ if ($_SESSION['curso'] != 1) {
 	<div class="content">
 		<div class="page-header">
 			<div class="page-title">
-				<h4>Listado de clases del Grados</h4>
-				<h6>Gestionar asignaturas</h6>
+				<h4>Listado de asistencias</h4>
+				<h6>Gestionar asistencias</h6>
 			</div>
 			<div class="page-btn">
-				<a href="insertasignatura.php?id=<?= $_GET["id"] ?>" class="btn btn-added"><img src="../../assets/img/icons/plus.svg" class="me-2" alt="img" />
-					Agregar </a>
+				<a href="insert.php" class="btn btn-added"><img src="../../assets/img/icons/plus.svg" class="me-2" alt="img" />
+					Agregar asistencias por grados</a>
 			</div>
 		</div>
 
@@ -60,9 +60,11 @@ if ($_SESSION['curso'] != 1) {
 						<thead>
 							<tr>
 								<th>Id</th>
-								<th>Grado</th>
-								<th>Asignatura</th>
-								<th>Acciones</th>
+								<th>Fecha</th>
+								<th>Estado</th>
+								<th>Estudiante</th>
+								<th>Curso</th>
+								<!-- <th>Acciones</th> -->
 							</tr>
 						</thead>
 						<tbody>
@@ -75,20 +77,19 @@ if ($_SESSION['curso'] != 1) {
 </div>
 
 <?php
-$idRegistro = $_GET["id"];
 require '../template/footer.php';
 ?>
 
 <script type="text/javascript">
 	function delayedFunction() {
-		$(location).attr("href", "<?= getBaseUrl() ?>/views/curso/asignatura.php?id=<?= $_GET["id"] ?>");
+		$(location).attr("href", "<?= getBaseUrl() ?>/views/asistencia");
 	}
 
 	function desactivar(id) {
 		var formData = new FormData();
 		formData.append("id", id);
 		$.ajax({
-			url: "<?= getBaseUrl() ?>/controllers/curso.php?op=eliminarAsignatura",
+			url: "<?= getBaseUrl() ?>/controllers/asistencia.php?op=desactivar",
 			type: "POST",
 			data: formData,
 			contentType: false,
@@ -99,7 +100,7 @@ require '../template/footer.php';
 					Swal.fire({
 						position: 'top-end',
 						icon: 'success',
-						title: 'Curso eliminado',
+						title: 'estudiante eliminado',
 						showConfirmButton: false,
 						timer: 1500
 					});
@@ -109,7 +110,7 @@ require '../template/footer.php';
 					Swal.fire({
 						position: 'top-end',
 						icon: 'success',
-						title: 'Curso no eliminada',
+						title: 'Categoría no eliminada',
 						showConfirmButton: false,
 						timer: 1500
 					});
@@ -118,9 +119,6 @@ require '../template/footer.php';
 		});
 	}
 	$(document).ready(function() {
-		var formData = new FormData();
-		formData.append("id", <?php echo $idRegistro ?>);
-		console.log(formData)
 		$(".tabledata").DataTable({
 			bFilter: true,
 			sDom: "fBtlpi",
@@ -138,9 +136,9 @@ require '../template/footer.php';
 			},
 
 			"ajax": {
-				url: '<?= getBaseUrl() ?>/controllers/curso.php?op=listarAsignaturas&id=<?php echo $idRegistro ?>',
-				type: "GET",
-				body: formData,
+				url: '<?= getBaseUrl() ?>/controllers/asistencia.php?op=listar',
+				type: "get",
+				dataType: "json",
 				error: function(e) {
 					console.log(e.responseText);
 				}

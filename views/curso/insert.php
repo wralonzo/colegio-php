@@ -62,7 +62,7 @@ require '../template/footer.php';
             Swal.fire({
               position: 'top-end',
               icon: 'success',
-              title: 'curso registrado',
+              title: 'Grado registrado',
               showConfirmButton: false,
               timer: 1500
             });

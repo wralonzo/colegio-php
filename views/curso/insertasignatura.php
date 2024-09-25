@@ -9,7 +9,7 @@ if ($_SESSION['curso'] != 1) {
   <div class="content">
     <div class="page-header">
       <div class="page-title">
-        <h4>Agregar Cursos</h4>
+        <h4>Agregar Grados</h4>
       </div>
     </div>
     <form name="formulario" id="formulario" method="POST">
@@ -18,7 +18,7 @@ if ($_SESSION['curso'] != 1) {
           <div class="row">
             <div class="col-lg-12">
               <div class="form-group">
-                <label>Selecciona el curso</label>
+                <label>Selecciona el Grado</label>
                 <select name="idasignatura" id="idasignatura" class="select" required>
                 </select>
               </div>
@@ -85,7 +85,7 @@ require '../template/footer.php';
             Swal.fire({
               position: 'top-end',
               icon: 'success',
-              title: 'curso registrado',
+              title: 'Grado registrado',
               showConfirmButton: false,
               timer: 1500
             });

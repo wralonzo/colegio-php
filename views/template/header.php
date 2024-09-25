@@ -64,7 +64,7 @@ if (!isset($_SESSION["nombre"])) {
                         <img src="<?= getBaseUrl() ?>/assets/img/logo.png" alt="" />
                     </a>
                     <a href="index.html" class="logo-small">
-                        <img src="<?= getBaseUrl() ?>/assets/img/logo-small.png" alt="" />
+                        <img src="<?= getBaseUrl() ?>/assets/img/favicon.jpg" alt="" />
                     </a>
                     <a id="toggle_btn" href="javascript:void(0);"> </a>
                 </div>
@@ -152,12 +152,12 @@ if (!isset($_SESSION["nombre"])) {
                             </li>
 
                             <li>
-                                <a href="<?= getBaseUrl() ?>/views/curso"><i data-feather="users"></i><span>Grados</span>
+                                <a href="<?= getBaseUrl() ?>/views/curso"><i data-feather="list"></i><span>Grados</span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="<?= getBaseUrl() ?>/views/asignatura"><i data-feather="users"></i><span>Asignaturas</span>
+                                <a href="<?= getBaseUrl() ?>/views/asignatura"><i data-feather="book"></i><span>Asignaturas</span>
                                 </a>
                             </li>
 

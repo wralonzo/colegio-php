@@ -105,4 +105,22 @@ class Curso
 		$sql = "SELECT * FROM $this->table";
 		return ejecutarConsulta($sql);
 	}
+
+	public function cursosEstudiantes($id)
+	{
+		$sql = "SELECT est.nombres, est.idestudiante FROM cursoestudiante ce
+			INNER JOIN estudiante est ON ce.idestudiante = est.idestudiante
+			INNER JOIN curso cu ON cu.idcurso = ce.idcurso
+			WHERE cu.idcurso=$id";
+		return ejecutarConsulta($sql);
+	}
+
+	public function cursoAsignaturas($id)
+	{
+		$sql = "SELECT asi.idasignatura, asi.nombre FROM `asignaturacurso` ac 
+			INNER JOIN asignatura asi ON asi.idasignatura = ac.idasingatura
+			INNER JOIN curso cu ON cu.idcurso = ac.idcurso
+			WHERE cu.idcurso = $id";
+		return ejecutarConsulta($sql);
+	}
 }
