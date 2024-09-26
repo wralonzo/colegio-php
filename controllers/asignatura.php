@@ -48,7 +48,7 @@ try {
             while ($reg = $rspta->fetch_object()) {
                 $data[] = array(
 
-                    "0" => $reg->id,
+                    "0" => $reg->idasignatura,
                     "1" => $reg->nombre,
                     "2" =>
                     ' <a class="me-3" href="' . getBaseUrl() . '/views/asignatura/edit.php?id=' . $reg->idasignatura . '"><img src="../../assets/img/icons/edit.svg" alt="img" /></a>
