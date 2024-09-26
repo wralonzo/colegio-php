@@ -27,7 +27,7 @@ if (!isset($_SESSION["nombre"])) {
         content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern,  html5, responsive" />
     <meta name="author" content="Dreamguys - Bootstrap Admin Template" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Colegio</title>
+    <title>Liceo Bella Guatemala perdona</title>
 
     <link
         rel="shortcut icon"
@@ -60,11 +60,11 @@ if (!isset($_SESSION["nombre"])) {
         <div class="main-wrapper">
             <div class="header">
                 <div class="header-left active">
-                    <a href="index.html" class="logo">
-                        <img src="<?= getBaseUrl() ?>/assets/img/logo.png" alt="" />
+                    <a href="#" class="logo">
+                        <img  style="width: 50px; height:50px" src="<?= getBaseUrl() ?>/assets/img/favicon.jpg" alt="" />
                     </a>
                     <a href="index.html" class="logo-small">
-                        <img src="<?= getBaseUrl() ?>/assets/img/favicon.jpg" alt="" />
+                        <img height="10%" width="10%" src="<?= getBaseUrl() ?>/assets/img/favicon.jpg" alt="" />
                     </a>
                     <a id="toggle_btn" href="javascript:void(0);"> </a>
                 </div>
@@ -109,7 +109,7 @@ if (!isset($_SESSION["nombre"])) {
                         </div>
                     </li>
                 </ul>
-
+                <h4 class="text-center center-text">Liceo Bella Guatemala perdona</h4>
                 <div class="dropdown mobile-user-menu">
                     <a
                         href="javascript:void(0);"
@@ -128,7 +128,7 @@ if (!isset($_SESSION["nombre"])) {
                     <div id="sidebar-menu" class="sidebar-menu">
                         <ul>
                             <li class="active">
-                                <a href="<?= getBaseUrl() ?>/views/"><img src="<?= getBaseUrl() ?>/assets/img/icons/dashboard.svg" alt="img" /><span>
+                                <a href="<?= getBaseUrl() ?>/views/"><img src="<?= getBaseUrl() ?>/assets/img/favicon.jpg" alt="img" /><span>
                                         Dashboard</span>
                                 </a>
                             </li>

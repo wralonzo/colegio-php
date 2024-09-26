@@ -9,12 +9,12 @@ if ($_SESSION['estudiante'] != 1) {
 	<div class="content">
 		<div class="page-header">
 			<div class="page-title">
-				<h4>Listado de asistencias</h4>
-				<h6>Gestionar asistencias</h6>
+				<h4>Listado de notas</h4>
+				<h6>Gestionar notas</h6>
 			</div>
 			<div class="page-btn">
 				<a href="insert.php" class="btn btn-added"><img src="../../assets/img/icons/plus.svg" class="me-2" alt="img" />
-					Agregar asistencia por grados</a>
+					Agregar notas por grados</a>
 			</div>
 		</div>
 
