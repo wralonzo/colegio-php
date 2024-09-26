@@ -12,7 +12,6 @@
 <script src="<?= getBaseUrl() ?>/assets/js/bootstrap.bundle.min.js"></script>
 
 <script src="<?= getBaseUrl() ?>/assets/plugins/apexchart/apexcharts.min.js"></script>
-<script src="<?= getBaseUrl() ?>/assets/plugins/apexchart/chart-data.js"></script>
 
 <script src="<?= getBaseUrl() ?>/assets/js/script.js"></script>
 <script src="<?= getBaseUrl() ?>/assets/plugins/select2/js/select2.min.js"></script>

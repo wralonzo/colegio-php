@@ -77,4 +77,21 @@ class Nota
 		";
 		return ejecutarConsulta($sql);
 	}
+
+	public function countMonth()
+	{
+		$sql = "SELECT COUNT(*) AS count FROM $this->table;";
+		return ejecutarConsulta($sql);
+	}
+
+	public function countMonthYear()
+	{
+		$currentYear = date('Y');
+		$sql = "SELECT MONTH(datecreated) AS month, COUNT(*) AS count 
+          FROM $this->table 
+          WHERE YEAR(datecreated) = $currentYear 
+          GROUP BY MONTH(datecreated) 
+          ORDER BY MONTH(datecreated)";
+		return ejecutarConsulta($sql);
+	}
 }

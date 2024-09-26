@@ -117,6 +117,12 @@ try {
             echo json_encode($results);
 
             break;
+
+        case 'count':
+            $rspta = $estudiante->countMonth();
+            $fetch = $rspta->fetch_object();
+            echo json_encode($fetch);
+            break;
     }
 } catch (Exception $e) {
     var_dump($e);

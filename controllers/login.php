@@ -100,7 +100,7 @@ switch ($_GET["op"]) {
         while ($per = $marcados->fetch_object()) {
             array_push($valores, $per->idpermiso);
         }
-    
+
         //Mostramos la lista de permisos en la vista y si están o no marcados
         while ($reg = $rspta->fetch_object()) {
             $sw = in_array($reg->idpermiso, $valores) ? 'checked' : '';
@@ -165,22 +165,8 @@ switch ($_GET["op"]) {
 
     case 'count':
         $rspta = $usuario->countMonth();
-        $valores = array();
-        $response = array();
-        while ($per = $rspta->fetch_object()) {
-            array_push($valores, $per);
-        }
-        $meses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-        foreach ($meses as $value) {
-            $countMonth = 0;
-            foreach ($valores as $value2) {
-                if ($value == $value2->month) {
-                    $countMonth = $value2->user_count;
-                }
-            }
-            array_push($response, array('mes' => $value, 'value' => $countMonth));
-        }
-        echo json_encode($response);
+        $fetch = $rspta->fetch_object();
+        echo json_encode($fetch);
         break;
     case 'salir':
         //Limpiamos las variables de sesión

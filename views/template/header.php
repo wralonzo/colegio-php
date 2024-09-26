@@ -128,7 +128,7 @@ if (!isset($_SESSION["nombre"])) {
                     <div id="sidebar-menu" class="sidebar-menu">
                         <ul>
                             <li class="active">
-                                <a href="index.html"><img src="<?= getBaseUrl() ?>/assets/img/icons/dashboard.svg" alt="img" /><span>
+                                <a href="<?= getBaseUrl() ?>/views/"><img src="<?= getBaseUrl() ?>/assets/img/icons/dashboard.svg" alt="img" /><span>
                                         Dashboard</span>
                                 </a>
                             </li>

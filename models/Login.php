@@ -123,7 +123,7 @@ class Login
 
 	public function countMonth()
 	{
-		$sql = "SELECT MONTH(date_created) AS month, COUNT(*) AS user_count FROM usuario GROUP BY MONTH(date_created) ORDER BY MONTH(date_created);";
+		$sql = "SELECT COUNT(*) AS count FROM usuario;";
 		return ejecutarConsulta($sql);
 	}
 }

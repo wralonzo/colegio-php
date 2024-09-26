@@ -131,6 +131,11 @@ try {
             }
             echo json_encode($data);
             break;
+        case 'count':
+            $rspta = $task->countMonth();
+            $fetch = $rspta->fetch_object();
+            echo json_encode($fetch);
+            break;
     }
 } catch (Exception $e) {
     var_dump($e);

@@ -66,8 +66,8 @@ try {
                     "4" => $reg->curso,
                     // "5" =>
                     // '<a onclick="desactivar(' . $reg->idnota . ')" class="me-3 confirm-text" href="#">
-					// 	<img src="../../assets/img/icons/delete.svg" alt="img" />
-				    // </a>',
+                    // 	<img src="../../assets/img/icons/delete.svg" alt="img" />
+                    // </a>',
                 );
             }
             $results = array(
@@ -78,6 +78,29 @@ try {
             );
             echo json_encode($results);
 
+            break;
+        case 'count':
+            $rspta = $task->countMonth();
+            $fetch = $rspta->fetch_object();
+            echo json_encode($fetch);
+            break;
+
+        case 'countyear':
+            $rspta = $task->countMonthYear($rol, $usuario);
+            $valores = array();
+            $response = array();
+            // Almacenar el conteo por mes en un array con el mes como clave
+            while ($per = $rspta->fetch_object()) {
+                // Cambiar user_count por count, ya que esa es la propiedad correcta
+                $valores[intval($per->month)] = intval($per->count);
+            }
+            $meses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+            // Llenar el array de respuesta con los valores o ceros
+            foreach ($meses as $mes) {
+                $countMonth = isset($valores[$mes]) ? $valores[$mes] : 0; // Si no existe, asignar 0
+                array_push($response, $countMonth);
+            }
+            echo json_encode($response);
             break;
     }
 } catch (Exception $e) {

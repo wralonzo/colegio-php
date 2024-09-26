@@ -123,4 +123,10 @@ class Curso
 			WHERE cu.idcurso = $id";
 		return ejecutarConsulta($sql);
 	}
+
+	public function countMonth()
+	{
+		$sql = "SELECT COUNT(*) AS count FROM $this->table;";
+		return ejecutarConsulta($sql);
+	}
 }

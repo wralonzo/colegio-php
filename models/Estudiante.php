@@ -100,4 +100,10 @@ class Estudiante
 		$sql = "DELETE FROM $this->cursoestudiante WHERE idcursoestudiante = $id";
 		return ejecutarConsulta($sql);
 	}
+
+	public function countMonth()
+	{
+		$sql = "SELECT COUNT(*) AS count FROM $this->table;";
+		return ejecutarConsulta($sql);
+	}
 }
