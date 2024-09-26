@@ -44,7 +44,7 @@ if ($_SESSION['curso'] != 1) {
 					</div>
 				</div>
 				<div class="">
-					<table class="table tabledata">
+					<table id="tabledata" class="table tabledata">
 						<thead>
 							<tr>
 								<th>Id</th>
@@ -134,6 +134,50 @@ require '../template/footer.php';
 				}
 			},
 		});
+	});
+
+	function printTable() {
+		const studentTable = document.getElementById('tabledata');
+
+		// Clonar la tabla para modificarla
+		const printTableClone = studentTable.cloneNode(true);
+
+		// Obtener todos los inputs dentro de la tabla clonada
+		const inputs = printTableClone.querySelectorAll('input');
+
+		// Reemplazar cada input por su valor en la tabla clonada
+		inputs.forEach(input => {
+			const inputValue = input.value || ''; // Obtener el valor del input o cadena vacía si está vacío
+			const textNode = document.createTextNode(inputValue); // Crear un nodo de texto con el valor del input
+			input.parentNode.replaceChild(textNode, input); // Reemplazar el input por el nodo de texto
+		});
+
+		// Centramos el contenido de todas las celdas
+		const cells = printTableClone.querySelectorAll('td, th'); // Seleccionar celdas de la tabla clonada
+		cells.forEach(cell => {
+			cell.style.textAlign = 'center'; // Centrar el contenido de las celdas
+		});
+
+		// Obtener el HTML de la tabla clonada ya modificada
+		const printContents = printTableClone.outerHTML;
+
+		// Abrir una nueva ventana para imprimir
+		const printWindow = window.open('', '', 'height=600,width=800');
+		printWindow.document.write('<html><head><title>Imprimir</title>');
+		printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">');
+		printWindow.document.write('</head><body>');
+		printWindow.document.write(printContents); // Añadir la tabla modificada en la nueva ventana
+		printWindow.document.write('</body></html>');
+
+		printWindow.document.close(); // Cerrar el documento
+		printWindow.focus(); // Hacer foco en la nueva ventana
+		printWindow.print(); // Activar el diálogo de impresión
+		printWindow.close(); // Cerrar la ventana después de imprimir
+	}
+
+	// Añadir el evento click al botón de imprimir
+	document.getElementById('printButton').addEventListener('click', function() {
+		printTable();
 	});
 </script>
 
