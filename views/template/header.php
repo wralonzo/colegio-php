@@ -7,7 +7,7 @@ function getBaseUrl()
     $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
     $domainName = $_SERVER['HTTP_HOST'];
     return
-        $protocol . $domainName . "/school";
+        $protocol . $domainName . "/colegio";
 }
 if (!isset($_SESSION["nombre"])) {
     header("Location: " . getBaseUrl());
@@ -27,7 +27,7 @@ if (!isset($_SESSION["nombre"])) {
         content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern,  html5, responsive" />
     <meta name="author" content="Dreamguys - Bootstrap Admin Template" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Liceo Bella Guatemala perdona</title>
+    <title>Liceo Bella Guatemala</title>
 
     <link
         rel="shortcut icon"
@@ -109,7 +109,7 @@ if (!isset($_SESSION["nombre"])) {
                         </div>
                     </li>
                 </ul>
-                <h4 class="text-center center-text">Liceo Bella Guatemala perdona</h4>
+                <h4 class="text-center center-text">Liceo Bella Guatemala</h4>
                 <div class="dropdown mobile-user-menu">
                     <a
                         href="javascript:void(0);"
