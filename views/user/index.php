@@ -169,6 +169,7 @@ require '../template/footer.php';
 	function printTable() {
 		const studentTable = document.getElementById('tabledata');
 
+	
 		// Clonar la tabla para modificarla
 		const printTableClone = studentTable.cloneNode(true);
 
